@@ -16,7 +16,13 @@
 #include "FX/ADSR.hpp"
 #include "FX/PolyBLEP.hpp"
 
-#include "audio_iirfilters.hpp"
+//#include "audio_iirfilters.hpp"
+#include "audio_iir_butterworth.hpp"
+#include "audio_iir_bessel.hpp"
+
+#include "Carlo/carlo_casino.hpp"
+
+#include "Filters/IIRFilters.hpp"
 
 #define ITERATE(index,start,end) for(size_t index = start; index < end; index += 1)
 #define STEP(index,start,end,step) for(size_t index = start; index < end; index += step)
@@ -33,8 +39,8 @@ PolyBLEP osc(sampleRate,PolyBLEP::SAWTOOTH);
 ADSR adsr(0.01,0.1,1.0,0.1,sampleRate);
 
 DspFloatType Freq,Kc,Vel,Fcutoff,Fc=100.0,Qn,Q=0.5,Gain;
-Filters::BiquadTransposedTypeII  filter;
-Filters::BiquadFilterCascade     cascade;
+IIRFilters::BiquadTransposedTypeII  filter;
+IIRFilters::BiquadFilterCascade     cascade;
 
 template<typename Osc>
 Eigen::VectorXf osc_tick(Osc & o, size_t n)
@@ -65,6 +71,75 @@ Eigen::VectorXf filter_tick(Filter & f, Eigen::Map<Eigen::VectorXf>& map, size_t
     return samples;
 }
 
+struct IPPIIRBiquad: public Casino::IPP::IIRBiquad<DspFloatType>
+{
+    IPPIIRBiquad() = default;
+    IPPIIRBiquad(const IIRFilters::BiquadSection &c) {
+        setCoefficients(c);
+    }
+    IPPIIRBiquad(const IIRFilters::BiquadSOS & sos) {
+        setCoefficients(sos);
+    }
+    void setCoefficients(const IIRFilters::BiquadSection & c)
+    {
+        DspFloatType buf[6];        
+        buf[0] = c.z[0];
+        buf[1] = c.z[1];
+        buf[2] = c.z[2];
+        buf[3] = 1.0;
+        buf[4] = c.p[0];
+        buf[5] = c.p[1];
+        this->initCoefficients(blockSize,1,buf);
+    }
+    void setCoefficients(const IIRFilters::BiquadSOS & sos)
+    {        
+        DspFloatType buf[6*sos.size()];
+        int x = 0;
+        for(size_t i = 0; i < sos.size(); i++)
+        {    
+            buf[x++] = sos[i].z[0];
+            buf[x++] = sos[i].z[1];
+            buf[x++] = sos[i].z[2];
+            buf[x++] = 1.0;
+            buf[x++] = sos[i].p[0];
+            buf[x++] = sos[i].p[1];
+        }
+        this->initCoefficients(blockSize,sos.size(),buf);
+    }
+    void setCoefficients(const Filters::FilterCoefficients & c)
+    {
+        DspFloatType buf[6];        
+        buf[0] = c.b[0];
+        buf[1] = c.b[1];
+        buf[2] = c.b[2];
+        buf[3] = 1.0;
+        buf[4] = c.a[0];
+        buf[5] = c.a[1];
+        this->initCoefficients(blockSize,1,buf);
+    }    
+    void setCoefficients(const std::vector<Filters::FilterCoefficients> & c)
+    {
+        DspFloatType buf[6*c.size()];
+        int x = 0;
+        for(size_t i = 0; i < c.size(); i++)
+        {    
+            buf[x++] = c[i].b[0];
+            buf[x++] = c[i].b[1];
+            buf[x++] = c[i].b[2];
+            buf[x++] = 1.0;
+            buf[x++] = c[i].a[0];
+            buf[x++] = c[i].a[1];
+        }
+        this->initCoefficients(blockSize,sos.size(),buf);
+    }    
+    void ProcessBlock(size_t n, DspFloatType * in, DspFloatType * out)
+    {
+        assert(n == this->len);
+        this->Execute(in,out);
+    }
+};
+
+IPPIIRBiquad ipp_filter;
 
 int audio_callback( const void *inputBuffer, void *outputBuffer,
                             unsigned long framesPerBuffer,
@@ -73,19 +148,25 @@ int audio_callback( const void *inputBuffer, void *outputBuffer,
                             void *userData )
 {        
     float * output = (float*)outputBuffer;    
-    Eigen::Map<Eigen::VectorXf> ovec(output,framesPerBuffer);        
-    //kfr3::Filters::BiquadSOS c = kfr3::Filters::butterlp2hp(Q);
-    Filters::BiquadSection c = Filters::butterlp2bp2(Q);
-    //auto x = kfr3::Filters::AnalogBiquadCascade(c,Fc,sampleRate);        
-    auto x = Filters::AnalogBiquadSection(c,Fc,sampleRate);        
-    //cascade.setCoefficients(x);    
-    filter.setCoefficients(x); 
+    Eigen::Map<Eigen::VectorXf> ovec(output,framesPerBuffer);            
+    
+    //Filters::BiquadSection c = Filters::butterlp2bp2(Q);
+    //auto x = Filters::AnalogBiquadSection(c,Fc,sampleRate);        
+    // ipp_filter.setCoefficients(x); 
+
+    IIRFilters::BiquadSOS c = IIRFilters::Bessel::bessellp(5,Q);
+    if(Fc < 30) Fc = 30;
+    if(Fc > sampleRate/2.0) Fc = sampleRate/2.0;
+    auto x = IIRFilters::AnalogBiquadCascade(c,Fc,sampleRate);                
+    cascade.setCoefficients(x);
+    
     osc.setFrequency(Kc);
     
     ovec = osc_tick(osc,framesPerBuffer);        
     ovec = env_tick(adsr,ovec,framesPerBuffer);    
-    //ovec = filter_tick(cascade,ovec,framesPerBuffer);        
-    ovec = filter_tick(filter,ovec,framesPerBuffer);        
+    ovec = filter_tick(cascade,ovec,framesPerBuffer);        
+    //ovec = filter_tick(filter,ovec,framesPerBuffer);        
+    //ipp_filter.ProcessBlock(framesPerBuffer,ovec.data(),ovec.data());
     return 0;
 }            
 

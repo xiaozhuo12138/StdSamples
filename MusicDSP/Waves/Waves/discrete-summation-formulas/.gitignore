@@ -1,0 +1,15 @@
+
+# vim temp files
+*.swp
+
+# precompiled c files
+*.o
+
+# compiled externals for MacOS
+*.pd_darwin
+
+# created by Doxygen:
+documentation/*
+
+# apple system files:
+.DS_Store

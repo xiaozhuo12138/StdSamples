@@ -1,234 +1,173 @@
 #pragma once
 
-#include <cmath>
-#include <array>
-#include <vector>
-#include <cstdint>
-#include <exception>
-#include <array>
-#include <random>
-#include <cassert>
-#include <algorithm>
-#include <cstring>
-
-/*! \brief implement a circular buffer of type T
-*/
-template <class T>
-class CRingBuffer
+namespace Casino
 {
-public:
-    explicit CRingBuffer(int iBufferLengthInSamples) :
-        m_iBuffLength(iBufferLengthInSamples),
-        m_iReadIdx(0),
-        m_iWriteIdx(0),
-        m_ptBuff(0)
+    template<typename T>
+    // r = frac
+    // x = [i]
+    // y = [i+1]
+    T linear_interpolate(T x, T y, T r)
+    {        
+        return x + r*(y-x);
+    }
+    template<typename T>
+    T cubic_interpolate(T finpos, T xm1, T x0, T x1, T x2)
     {
-        assert(iBufferLengthInSamples > 0);
-
-        m_ptBuff = new T[m_iBuffLength];
-        reset();
+        //T xm1 = x [inpos - 1];
+        //T x0  = x [inpos + 0];
+        //T x1  = x [inpos + 1];
+        //T x2  = x [inpos + 2];
+        T a = (3 * (x0-x1) - xm1 + x2) / 2;
+        T b = 2*x1 + xm1 - (5*x0 + x2) / 2;
+        T c = (x1 - xm1) / 2;
+        return (((a * finpos) + b) * finpos + c) * finpos + x0;
+    }
+    // original
+    template<typename T>
+    // x = frac
+    // y0 = [i-1]
+    // y1 = [i]
+    // y2 = [i+1]
+    // y3 = [i+2]
+    T hermite1(T x, T y0, T y1, T y2, T y3)
+    {
+        // 4-point, 3rd-order Hermite (x-form)
+        T c0 = y1;
+        T c1 = 0.5f * (y2 - y0);
+        T c2 = y0 - 2.5f * y1 + 2.f * y2 - 0.5f * y3;
+        T c3 = 1.5f * (y1 - y2) + 0.5f * (y3 - y0);
+        return ((c3 * x + c2) * x + c1) * x + c0;
     }
 
-    virtual ~CRingBuffer()
+    // james mccartney
+    template<typename T>
+    // x = frac
+    // y0 = [i-1]
+    // y1 = [i]
+    // y2 = [i+1]
+    // y3 = [i+2]
+    T hermite2(T x, T y0, T y1, T y2, T y3)
     {
-        delete[] m_ptBuff;
-        m_ptBuff = 0;
+        // 4-point, 3rd-order Hermite (x-form)
+        T c0 = y1;
+        T c1 = 0.5f * (y2 - y0);
+        T c3 = 1.5f * (y1 - y2) + 0.5f * (y3 - y0);
+        T c2 = y0 - y1 + c1 - c3;
+        return ((c3 * x + c2) * x + c1) * x + c0;
     }
 
-    /*! add a new value of type T to write index and increment write index
-    \param tNewValue the new value
-    \return void
-    */
-    void putPostInc(T tNewValue)
+    // james mccartney
+    template<typename T>
+    // x = frac
+    // y0 = [i-1]
+    // y1 = [i]
+    // y2 = [i+1]
+    // y3 = [i+2]
+    T hermite3(T x, T y0, T y1, T y2, T y3)
     {
-        put(tNewValue);
-        incIdx(m_iWriteIdx);
+            // 4-point, 3rd-order Hermite (x-form)
+            T c0 = y1;
+            T c1 = 0.5f * (y2 - y0);
+            T y0my1 = y0 - y1;
+            T c3 = (y1 - y2) + 0.5f * (y3 - y0my1 - y2);
+            T c2 = y0my1 + c1 - c3;
+
+            return ((c3 * x + c2) * x + c1) * x + c0;
     }
 
-    /*! add new values of type T to write index and increment write index
-    \param ptNewBuff: new values
-    \param iLength: number of values
-    \return void
-    */
-    void putPostInc(const T* ptNewBuff, int iLength)
+    // laurent de soras
+    template<typename T>
+    // x[i-1]
+    // x[i]
+    // x[i+1]
+    // x[i+2]    
+    inline T hermite4(T frac_pos, T xm1, T x0, T x1, T x2)
     {
-        put(ptNewBuff, iLength);
-        incIdx(m_iWriteIdx, iLength);
+        const T    c     = (x1 - xm1) * 0.5f;
+        const T    v     = x0 - x1;
+        const T    w     = c + v;
+        const T    a     = w + v + (x2 - x0) * 0.5f;
+        const T    b_neg = w + a;
+
+        return ((((a * frac_pos) - b_neg) * frac_pos + c) * frac_pos + x0);
     }
 
-    /*! add a new value of type T to write index
-    \param tNewValue the new value
-    \return void
-    */
-    void put(T tNewValue)
+    template<typename T>
+    sample_vector<T> mix(const sample_vector<T> & a, const sample_vector<T> & b, T f)
     {
-        m_ptBuff[m_iWriteIdx] = tNewValue;
+        assert(a.size() == b.size());
+        sample_vector<T> r(a.size());
+        #pragma omp simd
+        for(size_t i = 0; i < r.size(); i++) r[i] = a[i] + f*(b[i]-a[i]);
+        return r;
     }
 
-    /*! add new values of type T to write index
-    \param ptNewBuff: new values
-    \param iLength: number of values
-    \return void
-    */
-    void put(const T* ptNewBuff, int iLength)
-    {
-        assert(iLength <= m_iBuffLength && iLength >= 0);
-
-        // copy two parts: to the end of buffer and after wrap around
-        int iNumValues2End = std::min(iLength, m_iBuffLength - m_iWriteIdx);
-
-        std::memcpy (&m_ptBuff[m_iWriteIdx], ptNewBuff, sizeof(T)*iNumValues2End);
-        if ((iLength - iNumValues2End) > 0)
-            std::memcpy (m_ptBuff, &ptNewBuff[iNumValues2End], sizeof(T)*(iLength - iNumValues2End));
-    }
-
-    /*! return the value at the current read index and increment the read pointer
-    \return float the value from the read index
-    */
-    T getPostInc(float fOffset = 0)
-    {
-        T tValue = get(fOffset);
-        incIdx(m_iReadIdx);
-        return tValue;
-    }
-
-    /*! return the values starting at the current read index and increment the read pointer
-    \param ptBuff: pointer to where the values will be written
-    \param iLength: number of values
-    \return void
-    */
-    void getPostInc(T* ptBuff, int iLength)
-    {
-        get(ptBuff, iLength);
-        incIdx(m_iReadIdx, iLength);
-    }
-
-    /*! return the value at the current read index
-    \param fOffset: read at offset from read index
-    \return float the value from the read index
-    */
-    T get(float fOffset = 0) const
-    {
-        if (fOffset == 0)
-            return m_ptBuff[m_iReadIdx];
-        else
+    template<typename T>
+    sample_vector<T> interp2x(const sample_vector<T> & a)
+    {    
+        sample_vector<T> r(a.size()*2);
+        size_t n=0;
+        #pragma omp simd
+        for(size_t i = 0; i < a.size(); i++) 
         {
-
-            // compute fraction for linear interpolation 
-            int     iOffset = static_cast<int>(std::floor(fOffset));
-            float   fFrac = fOffset - iOffset;
-            int     iRead = m_iReadIdx + iOffset;
-            while (iRead > m_iBuffLength - 1)
-                iRead -= m_iBuffLength;
-            while (iRead < 0)
-                iRead += m_iBuffLength;
-
-            return (1 - fFrac) * m_ptBuff[iRead] +
-                fFrac * m_ptBuff[(iRead + 1) % m_iBuffLength];
+            r[n++] = a[i];
+            r[n++] = cubic_interpolate(T(0.5),a[i==0? 0:i-1],a[i],a[(i+1) % a.size()],a[(i+2) % a.size()]);
         }
+        return r;
     }
 
-    /*! return the values starting at the current read index
-    \param ptBuff to where the values will be written
-    \param iLength: number of values
-    \return void
-    */
-    void get(T* ptBuff, int iLength) const
-    {
-        assert(iLength <= m_iBuffLength && iLength >= 0);
-
-        // copy two parts: to the end of buffer and after wrap around
-        int iNumValues2End = std::min(iLength, m_iBuffLength - m_iReadIdx);
-
-        std::memcpy (ptBuff, &m_ptBuff[m_iReadIdx], sizeof(T)*iNumValues2End);
-        if ((iLength - iNumValues2End)>0)
-            std::memcpy (&ptBuff[iNumValues2End], m_ptBuff, sizeof(T)*(iLength - iNumValues2End));
-    }
-
-    T extractPostInc()
-    {
-        T value = get();
-        m_ptBuff[m_iReadIdx] = 0;
-        incIdx(m_iReadIdx);
-        return value;
-    }
-
-    /*! set buffer content and indices to 0
-    \return void
-    */
-    void reset()
-    {
-        std::memset (m_ptBuff, 0, sizeof(T)*m_iBuffLength);
-        m_iReadIdx  = 0;
-        m_iWriteIdx = 0;
-    }
-
-    /*! return the current index for writing/put
-    \return int
-    */
-    int getWriteIdx() const
-    {
-        return m_iWriteIdx;
-    }
-
-    /*! move the write index to a new position
-    \param iNewWriteIdx: new position
-    \return void
-    */
-    void setWriteIdx(int iNewWriteIdx)
-    {
-        incIdx(m_iWriteIdx, iNewWriteIdx - m_iWriteIdx);
-    }
-
-    /*! return the current index for reading/get
-    \return int
-    */
-    int getReadIdx() const
-    {
-        return m_iReadIdx;
-    }
-
-    /*! move the read index to a new position
-    \param iNewReadIdx: new position
-    \return void
-    */
-    void setReadIdx(int iNewReadIdx)
-    {
-        incIdx(m_iReadIdx, iNewReadIdx - m_iReadIdx);
-    }
-
-    /*! returns the number of values currently buffered (note: 0 could also mean the buffer is full!)
-    \return int
-    */
-    int getNumValuesInBuffer() const
-    {
-        return (m_iWriteIdx - m_iReadIdx + m_iBuffLength) % m_iBuffLength;
-    }
-
-    /*! returns the length of the internal buffer
-    \return int
-    */
-    int getLength() const
-    {
-        return m_iBuffLength;
-    }
-private:
-    CRingBuffer();
-    CRingBuffer(const CRingBuffer& that);
-
-    void incIdx(int& iIdx, int iOffset = 1)
-    {
-        while ((iIdx + iOffset) < 0)
+    template<typename T>
+    sample_vector<T> interp4x(const sample_vector<T> & a)
+    {    
+        sample_vector<T> r(a.size()*4);
+        size_t n=0;
+        #pragma omp simd
+        for(size_t i = 0; i < a.size(); i++) 
         {
-            // avoid negative buffer indices
-            iOffset += m_iBuffLength;
+            r[n++] = a[i];
+            r[n++] = cubic_interpolate(T(0.25),a[i==0? 0:i-1],a[i],a[(i+1) % a.size()],a[(i+2) % a.size()]);
+            r[n++] = cubic_interpolate(T(0.5),a[i==0? 0:i-1],a[i],a[(i+1) % a.size()],a[(i+2) % a.size()]);
+            r[n++] = cubic_interpolate(T(0.75),a[i==0? 0:i-1],a[i],a[(i+1) % a.size()],a[(i+2) % a.size()]);
         }
-        iIdx = (iIdx + iOffset) % m_iBuffLength;
+        return r;
+    }
+
+    template<typename T>
+    struct RingBuffer : public sample_vector<T>
+    {
+        size_t r=0;
+        size_t w=0;
+
+        RingBuffer(size_t n) {
+            sample_vector<T>::resize(n);
+        }
+
+        void set_write_position(size_t n) {
+            w = (n % sample_vector<T>::size());
+        }  
+        T    get() {
+            return (*this)[r++];
+        }
+        void push(T x) {
+            (*this)[w++] = x;
+            w = (w % sample_vector<T>::size());
+        }
+        T linear() {
+            T x = (*this)[r];
+            T x1= (*this)[r++];
+            T f = x - floor(x);
+            r = r % sample_vector<T>::size();
+            return linear_interpolate(x,x1,f);        
+        }
+        T cubic() {
+            T xm1= (*this)[(r-1) % sample_vector<T>::size()];
+            T x = (*this)[r];
+            T x1= (*this)[(r+1) % sample_vector<T>::size()];
+            T x2= (*this)[(r+2) % sample_vector<T>::size()];
+            T f = x - floor(x);
+            r++;
+            r = r % sample_vector<T>::size();
+            return cubic_interpolate(f,xm1,x,x1,x2);        
+        }
     };
-
-    int m_iBuffLength = 0,      //!< length of the internal buffer
-        m_iReadIdx = 0,         //!< current read index
-        m_iWriteIdx = 0;        //!< current write index
-
-    T* m_ptBuff = 0;            //!< data buffer
-};
+}

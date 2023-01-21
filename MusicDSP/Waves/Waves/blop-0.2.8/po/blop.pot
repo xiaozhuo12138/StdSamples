@@ -1,0 +1,468 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Mike Rawes
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-13 16:07+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/adsr_1653.so.c:319
+msgid "ADSR Envelope"
+msgstr ""
+
+#: src/adsr_1653.so.c:336
+msgid "Driving Signal"
+msgstr ""
+
+#: src/adsr_1653.so.c:341
+msgid "Trigger Threshold"
+msgstr ""
+
+#: src/adsr_1653.so.c:346 src/adsr_1680.so.c:346 src/dahdsr_2021.so.c:850
+msgid "Attack Time (s)"
+msgstr ""
+
+#: src/adsr_1653.so.c:352 src/adsr_1680.so.c:352 src/dahdsr_2021.so.c:862
+msgid "Decay Time (s)"
+msgstr ""
+
+#: src/adsr_1653.so.c:358 src/adsr_1680.so.c:358 src/dahdsr_2021.so.c:868
+msgid "Sustain Level"
+msgstr ""
+
+#: src/adsr_1653.so.c:366 src/adsr_1680.so.c:366 src/dahdsr_2021.so.c:876
+msgid "Release Time (s)"
+msgstr ""
+
+#: src/adsr_1653.so.c:372 src/adsr_1680.so.c:372 src/dahdsr_2021.so.c:882
+msgid "Envelope Out"
+msgstr ""
+
+#: src/adsr_1680.so.c:319
+msgid "ADSR Envelope with Gate and Trigger"
+msgstr ""
+
+#: src/adsr_1680.so.c:336 src/dahdsr_2021.so.c:834
+#: src/sync_pulse_2023.so.c:303 src/sync_square_1678.so.c:279
+#: src/tracker_2025.so.c:305
+msgid "Gate"
+msgstr ""
+
+#: src/adsr_1680.so.c:341 src/dahdsr_2021.so.c:839
+msgid "Trigger"
+msgstr ""
+
+#: src/amp_1654.so.c:158
+msgid "Amplifier (GAIA)"
+msgstr ""
+
+#: src/amp_1654.so.c:159
+msgid "Amplifier (GCIA)"
+msgstr ""
+
+#: src/amp_1654.so.c:213
+msgid "Gain (dB)"
+msgstr ""
+
+#: src/amp_1654.so.c:220 src/branch_1673.so.c:199 src/difference_2030.so.c:264
+#: src/lp4pole_1671.so.c:279 src/quantiser.so.c:656 src/tracker_2025.so.c:346
+msgid "Input"
+msgstr ""
+
+#: src/amp_1654.so.c:225 src/lp4pole_1671.so.c:284 src/pulse_1645.so.c:395
+#: src/random_1661.so.c:451 src/sawtooth_1641.so.c:253
+#: src/square_1643.so.c:255 src/sync_pulse_2023.so.c:308
+#: src/sync_square_1678.so.c:284 src/tracker_2025.so.c:351
+#: src/triangle_1649.so.c:414
+msgid "Output"
+msgstr ""
+
+#: src/branch_1673.so.c:144
+msgid "Signal Branch (IA)"
+msgstr ""
+
+#: src/branch_1673.so.c:145
+msgid "Signal Branch (IC)"
+msgstr ""
+
+#: src/branch_1673.so.c:204
+msgid "First Output"
+msgstr ""
+
+#: src/branch_1673.so.c:209
+msgid "Second Output"
+msgstr ""
+
+#: src/dahdsr_2021.so.c:756
+msgid "DAHDSR Envelope with Gate and Trigger (Audio-Rate Inputs)"
+msgstr ""
+
+#: src/dahdsr_2021.so.c:757
+msgid "DAHDSR Envelope with Gate and Trigger (Control Inputs)"
+msgstr ""
+
+#: src/dahdsr_2021.so.c:758
+msgid "DAHDSR Envelope with Control Gate and Trigger (Control Inputs)"
+msgstr ""
+
+#: src/dahdsr_2021.so.c:844
+msgid "Delay Time (s)"
+msgstr ""
+
+#: src/dahdsr_2021.so.c:856
+msgid "Hold Time (s)"
+msgstr ""
+
+#: src/difference_2030.so.c:200
+msgid "Signal Difference (IAMA)"
+msgstr ""
+
+#: src/difference_2030.so.c:201
+msgid "Signal Difference (IAMC)"
+msgstr ""
+
+#: src/difference_2030.so.c:202
+msgid "Signal Difference (ICMA)"
+msgstr ""
+
+#: src/difference_2030.so.c:203
+msgid "Signal Difference (ICMC)"
+msgstr ""
+
+#: src/difference_2030.so.c:269
+msgid "Input to Subtract"
+msgstr ""
+
+#: src/difference_2030.so.c:274
+msgid "Difference Output"
+msgstr ""
+
+#: src/fmod_1656.so.c:211
+msgid "Frequency Modulator (FAMA)"
+msgstr ""
+
+#: src/fmod_1656.so.c:212
+msgid "Frequency Modulator (FAMC)"
+msgstr ""
+
+#: src/fmod_1656.so.c:213
+msgid "Frequency Modulator (FCMA)"
+msgstr ""
+
+#: src/fmod_1656.so.c:214
+msgid "Frequency Modulator (FCMC)"
+msgstr ""
+
+#: src/fmod_1656.so.c:275 src/random_1661.so.c:434
+msgid "Frequency (Hz)"
+msgstr ""
+
+#: src/fmod_1656.so.c:284
+msgid "Modulation (Octaves)"
+msgstr ""
+
+#: src/fmod_1656.so.c:289
+msgid "Modulated Frequency (Hz)"
+msgstr ""
+
+#: src/interpolator_1660.so.c:191
+msgid "Control to Audio Interpolator"
+msgstr ""
+
+#: src/interpolator_1660.so.c:208
+msgid "Control Input"
+msgstr ""
+
+#: src/interpolator_1660.so.c:213
+msgid "Interpolated Output"
+msgstr ""
+
+#: src/lp4pole_1671.so.c:205
+msgid "4 Pole Low-Pass Filter with Resonance (FARAIA)"
+msgstr ""
+
+#: src/lp4pole_1671.so.c:206
+msgid "4 Pole Low-Pass Filter with Resonance (FCRCIA)"
+msgstr ""
+
+#: src/lp4pole_1671.so.c:262
+msgid "Cutoff Frequency"
+msgstr ""
+
+#: src/lp4pole_1671.so.c:271
+msgid "Resonance"
+msgstr ""
+
+#: src/product_1668.so.c:172
+msgid "Signal Product (IAIA)"
+msgstr ""
+
+#: src/product_1668.so.c:173
+msgid "Signal Product (IAIC)"
+msgstr ""
+
+#: src/product_1668.so.c:174
+msgid "Signal Product (ICIC)"
+msgstr ""
+
+#: src/product_1668.so.c:231 src/sum_1665.so.c:231
+msgid "First Input"
+msgstr ""
+
+#: src/product_1668.so.c:236 src/sum_1665.so.c:236
+msgid "Second Input"
+msgstr ""
+
+#: src/product_1668.so.c:241
+msgid "Product Output"
+msgstr ""
+
+#: src/pulse_1645.so.c:313
+msgid "Bandlimited Variable Width Pulse Oscillator (FAPA)"
+msgstr ""
+
+#: src/pulse_1645.so.c:314
+msgid "Bandlimited Variable Width Pulse Oscillator (FAPC)"
+msgstr ""
+
+#: src/pulse_1645.so.c:315
+msgid "Bandlimited Variable Width Pulse Oscillator (FCPA)"
+msgstr ""
+
+#: src/pulse_1645.so.c:316
+msgid "Bandlimited Variable Width Pulse Oscillator (FCPC)"
+msgstr ""
+
+#: src/pulse_1645.so.c:378 src/sawtooth_1641.so.c:244 src/square_1643.so.c:246
+#: src/sync_pulse_2023.so.c:287 src/sync_square_1678.so.c:271
+#: src/triangle_1649.so.c:397
+msgid "Frequency"
+msgstr ""
+
+#: src/pulse_1645.so.c:387 src/sync_pulse_2023.so.c:295
+msgid "Pulse Width"
+msgstr ""
+
+#: src/quantiser.so.c:584
+#, c-format
+msgid "Quantiser (%d Steps)"
+msgstr ""
+
+#: src/quantiser.so.c:585
+#, c-format
+msgid "Steps (1 - %d)"
+msgstr ""
+
+#: src/quantiser.so.c:615
+msgid "Quantise Range Minimum"
+msgstr ""
+
+#: src/quantiser.so.c:620
+msgid "Quantise Range Maximum"
+msgstr ""
+
+#: src/quantiser.so.c:625
+msgid "Match Range"
+msgstr ""
+
+#: src/quantiser.so.c:631
+msgid "Mode (0 = Extend, 1 = Wrap, 2 = Clip)"
+msgstr ""
+
+#: src/quantiser.so.c:649
+#, c-format
+msgid "Value %d"
+msgstr ""
+
+#: src/quantiser.so.c:661
+msgid "Quantised Output"
+msgstr ""
+
+#: src/quantiser.so.c:666
+msgid "Output Changed"
+msgstr ""
+
+#: src/random_1661.so.c:369
+msgid "Random Wave Generator (FASA)"
+msgstr ""
+
+#: src/random_1661.so.c:370
+msgid "Random Wave Generator (FASC)"
+msgstr ""
+
+#: src/random_1661.so.c:371
+msgid "Random Wave Generator (FCSA)"
+msgstr ""
+
+#: src/random_1661.so.c:372
+msgid "Random Wave Generator (FCSC)"
+msgstr ""
+
+#: src/random_1661.so.c:443
+msgid "Wave Smoothness"
+msgstr ""
+
+#: src/ratio_2034.so.c:209
+msgid "Signal Ratio (NADA)"
+msgstr ""
+
+#: src/ratio_2034.so.c:210
+msgid "Signal Ratio (NADC)"
+msgstr ""
+
+#: src/ratio_2034.so.c:211
+msgid "Signal Ratio (NCDA)"
+msgstr ""
+
+#: src/ratio_2034.so.c:212
+msgid "Signal Ratio (NCDC)"
+msgstr ""
+
+#: src/ratio_2034.so.c:273
+msgid "Numerator"
+msgstr ""
+
+#: src/ratio_2034.so.c:278
+msgid "Denominator"
+msgstr ""
+
+#: src/ratio_2034.so.c:283
+msgid "Ratio Output"
+msgstr ""
+
+#: src/sawtooth_1641.so.c:191
+msgid "Bandlimited Sawtooth Oscillator (FA)"
+msgstr ""
+
+#: src/sawtooth_1641.so.c:192
+msgid "Bandlimited Sawtooth Oscillator (FC)"
+msgstr ""
+
+#: src/sequencer.so.c:258
+#, c-format
+msgid "Analogue Style %d Step Sequencer"
+msgstr ""
+
+#: src/sequencer.so.c:259
+#, c-format
+msgid "Loop Steps (1 - %d)"
+msgstr ""
+
+#: src/sequencer.so.c:289
+msgid "Gate (Open > 0)"
+msgstr ""
+
+#: src/sequencer.so.c:294
+msgid "Step Trigger"
+msgstr ""
+
+#: src/sequencer.so.c:307
+msgid "Reset to Value on Gate Close?"
+msgstr ""
+
+#: src/sequencer.so.c:315
+msgid "Closed Gate Value"
+msgstr ""
+
+#: src/sequencer.so.c:322
+#, c-format
+msgid "Value Step %d"
+msgstr ""
+
+#: src/sequencer.so.c:329
+msgid "Value Out"
+msgstr ""
+
+#: src/square_1643.so.c:193
+msgid "Bandlimited Square Oscillator (FA)"
+msgstr ""
+
+#: src/square_1643.so.c:194
+msgid "Bandlimited Square Oscillator (FC)"
+msgstr ""
+
+#: src/sum_1665.so.c:172
+msgid "Signal Sum (IAIA)"
+msgstr ""
+
+#: src/sum_1665.so.c:173
+msgid "Signal Sum (IAIC)"
+msgstr ""
+
+#: src/sum_1665.so.c:174
+msgid "Signal Sum (ICIC)"
+msgstr ""
+
+#: src/sum_1665.so.c:241
+msgid "Summed Output"
+msgstr ""
+
+#: src/sync_pulse_2023.so.c:231
+msgid "Clock Pulse Oscillator with Gate (FAPAGA)"
+msgstr ""
+
+#: src/sync_pulse_2023.so.c:232
+msgid "Clock Pulse Oscillator with Gate (FCPCGA)"
+msgstr ""
+
+#: src/sync_square_1678.so.c:216
+msgid "Clock Oscillator with Gate (FAGA)"
+msgstr ""
+
+#: src/sync_square_1678.so.c:217
+msgid "Clock Oscillator with Gate (FCGA)"
+msgstr ""
+
+#: src/tracker_2025.so.c:242
+msgid "Signal Tracker (Audio Rates)"
+msgstr ""
+
+#: src/tracker_2025.so.c:243
+msgid "Signal Tracker (Control Rates)"
+msgstr ""
+
+#: src/tracker_2025.so.c:310
+msgid "Attack Rate (Hz) when Gate High"
+msgstr ""
+
+#: src/tracker_2025.so.c:319
+msgid "Decay Rate (Hz) when Gate High"
+msgstr ""
+
+#: src/tracker_2025.so.c:328
+msgid "Attack Rate (Hz) when Gate Low"
+msgstr ""
+
+#: src/tracker_2025.so.c:337
+msgid "Decay Rate (Hz) when Gate Low"
+msgstr ""
+
+#: src/triangle_1649.so.c:332
+msgid "Bandlimited Variable Slope Triangle Oscillator (FASA)"
+msgstr ""
+
+#: src/triangle_1649.so.c:333
+msgid "Bandlimited Variable Slope Triangle Oscillator (FASC)"
+msgstr ""
+
+#: src/triangle_1649.so.c:334
+msgid "Bandlimited Variable Slope Triangle Oscillator (FCSA)"
+msgstr ""
+
+#: src/triangle_1649.so.c:335
+msgid "Bandlimited Variable Slope Triangle Oscillator (FCSC)"
+msgstr ""
+
+#: src/triangle_1649.so.c:406
+msgid "Slope"
+msgstr ""

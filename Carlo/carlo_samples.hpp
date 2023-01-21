@@ -14,8 +14,8 @@
 #include <cassert>
 
 //#include "samples/Allocator.hpp"
-#include "carlo_mkl.hpp"
-#include "carlo_sndfile.hpp"
+#include "Carlo/carlo_mkl.hpp"
+#include "Core/core_sndfile.hpp"
 
 namespace Casino
 {
@@ -304,32 +304,29 @@ namespace Casino
         return std::find(v.begin(),v.end(),val) != v.end();
     }
 
-    
-    template<typename T>
-    MKL::Vector<T> mix(const MKL::Vector<T> & a, const MKL::Vector<T> & b)
-    {
-        assert(a.size() == b.size());
-        MKL::Vector<T> r(a.size());
-        T max = -99999;
-        #pragma omp simd
-        for(size_t i = 0; i < r.size(); i++) 
-        {
-            r[i] = a[i]+b[i];
-            if(fabs(r[i]) > max) max = fabs(r[i]);
-        }
-        if(max > 0) for(size_t i = 0; i < r.size(); i++) r[i] /= max;
-        return r;
-    }
     template<typename T>
     MKL::Vector<T> normalize(const MKL::Vector<T> & a) {
         MKL::Vector<T> r(a);        
-        T max = std::max_element(r.begin(),r.end());
-        
+        T max = *std::max_element(r.begin(),r.end());        
         if(max > 0) 
             #pragma omp simd
             for(size_t i = 0; i < r.size(); i++) r[i] /= max;
         return r;
     }
+
+    template<typename T>
+    MKL::Vector<T> mix(const MKL::Vector<T> & a, const MKL::Vector<T> & b)
+    {
+        assert(a.size() == b.size());
+        MKL::Vector<T> r(a.size());        
+        #pragma omp simd
+        for(size_t i = 0; i < r.size(); i++) 
+        {
+            r[i] = a[i]+b[i];        
+        }
+        return normalize(r);        
+    }
+    
     template<class A, class B>
     MKL::Vector<B> convert(const MKL::Vector<A> & v) {
         MKL::Vector<B> r(v.size());

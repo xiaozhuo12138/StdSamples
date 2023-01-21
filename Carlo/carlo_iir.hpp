@@ -1,4 +1,5 @@
 #pragma once
+#define PRINT(x) std::cout << (x) << std::endl
 
 namespace Casino::IPP
 {
@@ -158,21 +159,23 @@ namespace Casino::IPP
         void  * pState;
         T*      dlyLine;
         
+        IIR() {
+            pBuffer = nullptr;
+            len = 0;
+            pState = nullptr;
+            dlyLine = nullptr;
+        }
         // B0,B1..Border,A0,A1..Aorder = 2*(order+1)
         IIR(size_t n, int order, const T * taps) {
-            int bufferSize;
-            IIRGetStateSize<T>(n,&bufferSize);            
-            len = n;
-            pBuffer = Malloc<Ipp8u>(bufferSize);            
-            IIRInit<T>(&pState,taps,order,NULL,pBuffer);            
-            dlyLine = Malloc<T>(2*(order+1));
+            initCoefficients(n,order,taps);
         }
         ~IIR() {
             if(pBuffer) Free(pBuffer);      
-            if(dlyLine) Free(dlyLine);  
-        }
-        void setCoefficients(int n, int order, const T* taps) {
+            if(dlyLine) Free(dlyLine);          
+        }        
+        void initCoefficients(int n, int order, const T* taps) {
             if(pBuffer) Free(pBuffer);
+            if(dlyLine) Free(dlyLine);
             int bufferSize;
             len = n;
             // have to save it so it doesn't pop
@@ -192,36 +195,45 @@ namespace Casino::IPP
     struct IIRBiquad
     {        
         Ipp8u * pBuffer;
-        size_t  len;                
+        size_t  len,numb;
         void  * pState;
         T*      dlyLine;
         
-
+        IIRBiquad() {
+            pBuffer = nullptr;
+            len = 0;
+            numb=0;
+            pState = nullptr;
+            dlyLine = nullptr;
+        }
         // B0,B1..Border,A0,A1..Aorder = 2*(order+1)
-        IIRBiquad(size_t n, int numBiquads, const T* taps) {
-            int bufferSize;
-            IIRGetStateSize<T>(n,&bufferSize);            
-            len = n;
-            pBuffer = Malloc<Ipp8u>(bufferSize);            
-            IIRInit_BiQuad<T>(&pState,taps,numBiquads,NULL,pBuffer);            
-            dlyLine = Malloc<T>(2*numBiquads);
+        IIRBiquad(size_t n, int numBiquads, const T* taps) {                                    
+            initCoefficients(n,numBiquads,taps);
         }
         ~IIRBiquad() {
             if(pBuffer) Free(pBuffer);        
             if(dlyLine) Free(dlyLine);
-        }
-        void setCoefficients(int order, int numBiquads, const T* taps) {
-            if(pBuffer) Free(pBuffer);
+        }        
+        void initCoefficients(size_t n, int numBiquads, const T* taps) {
+            
             int bufferSize;
-            IIRGetDlyLine<T>(pState,dlyLine);            
-            IIRGetStateSize<T>(numBiquads,&bufferSize);            
-            pBuffer = Malloc<Ipp8u>(bufferSize);            
-            IIRInit_BiQuad<T>(&pState,taps,numBiquads,NULL,pBuffer);            
+            
+            len = n;            
+            if(dlyLine) IIRGetDlyLine<T>(pState,dlyLine);            
+            else dlyLine = Malloc<T>(2*numBiquads);            
+            if( numb != numBiquads)
+            {                
+                if(pBuffer) Free(pBuffer);                
+                IIRGetStateSize<T>(numBiquads,&bufferSize);                                                    
+                pBuffer = Malloc<Ipp8u>(bufferSize);                            
+                numb = numBiquads;
+            }         
+            IIRInit_BiQuad<T>(&pState,taps,numBiquads,dlyLine,pBuffer);                                    
             IIRSetDlyLine<T>(pState,dlyLine);            
         }
         void Execute(const T* pSrc, T* pDst)
-        {
-            IIR_<T>(pSrc,pDst,len,pState);            
+        {            
+            IIR_<T>(pSrc,pDst,len,pState);                              
         }
     };
 
@@ -234,10 +246,10 @@ namespace Casino::IPP
         IIRButterworthLowpassFilter(size_t n, Ipp64f freq, int order)
         {
             int bufferSize;
-            IIRGetStateSize<T>(n,&bufferSize);   
+            IIRGetStateSize<Ipp64f>(n,&bufferSize);   
             buffer = Malloc<Ipp8u>(bufferSize);
             taps   = Malloc<Ipp64f>(n);
-            IIRGenLowpass<Ipp64f>(freq,0,order,taps,ippButterworth,buffer);
+            IIRGenLowpassButterworth(freq,0,order,taps,buffer);
             iir = new IIR<Ipp64f>(n,order,taps);
             assert(iir != nullptr);
         }
@@ -246,7 +258,7 @@ namespace Casino::IPP
             if(taps) Free(taps);
             if(buffer) Free(buffer);
         }
-        void Execute(const T* pSrc, T* pDst)
+        void Execute(const Ipp64f* pSrc, Ipp64f* pDst)
         {
             iir->Execute(pSrc,pDst);
         }
@@ -260,10 +272,10 @@ namespace Casino::IPP
         IIRButterworthHighpassFilter(size_t n, Ipp64f freq, int order)
         {
             int bufferSize;
-            IIRGetStateSize<T>(n,&bufferSize);   
+            IIRGetStateSize<Ipp64f>(n,&bufferSize);   
             buffer = Malloc<Ipp8u>(bufferSize);
             taps   = Malloc<Ipp64f>(n);
-            IIRGenHighpass<Ipp64f>(freq,0,order,taps,ippButterworth,buffer);
+            IIRGenHighpassButterworth(freq,0,order,taps,buffer);
             iir = new IIR<Ipp64f>(n,order,taps);
             assert(iir != nullptr);
         }
@@ -272,7 +284,7 @@ namespace Casino::IPP
             if(taps) Free(taps);
             if(buffer) Free(buffer);
         }
-        void Execute(const T* pSrc, T* pDst)
+        void Execute(const Ipp64f* pSrc, Ipp64f* pDst)
         {
             iir->Execute(pSrc,pDst);
         }
@@ -288,10 +300,10 @@ namespace Casino::IPP
         IIRChebyshevLowpassFilter(int order,size_t n, Ipp64f freq, Ipp64f ripple)
         {
             int bufferSize;
-            IIRGetStateSize<T>(n,&bufferSize);   
+            IIRGetStateSize<Ipp64f>(n,&bufferSize);   
             buffer = Malloc<Ipp8u>(bufferSize);
             taps   = Malloc<Ipp64f>(n);
-            IIRGenLowpass<Ipp64f>(freq,ripple,order,taps,ippChebyshev1,buffer);
+            IIRGenLowpassChebyshev1(freq,ripple,order,taps,buffer);
             iir = new IIR<Ipp64f>(n,order,taps);
             assert(iir != nullptr);
         }
@@ -300,7 +312,7 @@ namespace Casino::IPP
             if(taps) Free(taps);
             if(buffer) Free(buffer);
         }
-        void Execute(const T* pSrc, T* pDst)
+        void Execute(const Ipp64f* pSrc, Ipp64f* pDst)
         {
             iir->Execute(pSrc,pDst);
         }
@@ -316,10 +328,10 @@ namespace Casino::IPP
         IIRChebyshevHighpassFilter(int order,size_t n, Ipp64f freq, Ipp64f ripple)
         {
             int bufferSize;
-            IIRGetStateSize<T>(n,&bufferSize);   
+            IIRGetStateSize<Ipp64f>(n,&bufferSize);   
             buffer = Malloc<Ipp8u>(bufferSize);
             taps   = Malloc<Ipp64f>(n);
-            IIRGenHighpass<Ipp64f>(freq,ripple,order,taps,ippChebyshev1,buffer);
+            IIRGenHighpassChebyshev1(freq,ripple,order,taps,buffer);
             iir = new IIR<Ipp64f>(n,order,taps);
             assert(iir != nullptr);
         }
@@ -328,7 +340,7 @@ namespace Casino::IPP
             if(taps) Free(taps);
             if(buffer) Free(buffer);
         }
-        void Execute(const T* pSrc, T* pDst)
+        void Execute(const Ipp64f* pSrc, Ipp64f* pDst)
         {
             iir->Execute(pSrc,pDst);
         }
@@ -344,19 +356,19 @@ namespace Casino::IPP
     {
         filter.Execute(pSrc,pDst);
     }
-    void filter(IIRButterworthLowpassFilter & filter, const T* pSrc, T* pDst)
+    void filter(IIRButterworthLowpassFilter & filter, const Ipp64f* pSrc, Ipp64f* pDst)
     {
         filter.Execute(pSrc,pDst);
     }
-    void filter(IIRButterworthHighpassFilter & filter, const T* pSrc, T* pDst)
+    void filter(IIRButterworthHighpassFilter & filter, const Ipp64f* pSrc, Ipp64f* pDst)
     {
         filter.Execute(pSrc,pDst);
     }
-    void filter(IIRChebyshevLowpassFilter & filter, const T* pSrc, T* pDst)
+    void filter(IIRChebyshevLowpassFilter & filter, const Ipp64f* pSrc, Ipp64f* pDst)
     {
         filter.Execute(pSrc,pDst);
     }
-    void filter(IIRChebyshevHighpassFilter & filter, const T* pSrc, T* pDst)
+    void filter(IIRChebyshevHighpassFilter & filter, const Ipp64f* pSrc, Ipp64f* pDst)
     {
         filter.Execute(pSrc,pDst);
     }

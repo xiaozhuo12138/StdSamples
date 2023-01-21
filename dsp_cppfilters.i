@@ -1,7 +1,7 @@
 %module cppfilters 
 %{
 //#include "filter_includes.h"
-#include "dsp_cppfilters.hpp"
+#include "DSP/dsp_cppfilters.hpp"
 %}
 
 %include "std_vector.i"
@@ -9,7 +9,7 @@
 %template(double_vector) std::vector<double>;
 %template(ldouble_vector) std::vector<long double>;
 
-%include "dsp_cppfilters.hpp"
+%include "DSP/dsp_cppfilters.hpp"
 /*
 %include "biquad.h"
 %include "biquad_modified.h"

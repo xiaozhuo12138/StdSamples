@@ -13,10 +13,10 @@ typedef double SampleType;
 #include <kfr/dft.hpp>
 #include <kfr/io.hpp>
 #include <kfr/math.hpp>
-#include "kfrcore.hpp"
+#include "uKfr/kfrcore.hpp"
 
 #include "KfrDSP/KfrDsp.hpp"
-#include "IIRFilters.hpp"
+#include "Kfr3/kfr_IIRFilters.hpp"
 
 using namespace KfrDSP1;
 using namespace Filters;
@@ -30,19 +30,19 @@ using namespace Filters;
 %include "std_list.i"
 %include "std_map.i"
 
-%include "kfr_biquad.hpp"
-%include "kfr_bessel.hpp"
-%include "kfr_butterworth.hpp"
-%include "kfr_chebyshev1.hpp"
-%include "kfr_chebyshev2.hpp"
-%include "kfr_convolve.hpp"
-%include "kfr_dct.hpp"
-%include "kfr_dft.hpp"
-%include "kfr_fileio.hpp"
-%include "kfr_fir.hpp"
-%include "kfr_resample.hpp"
-%include "kfr_window.hpp"
-%include "kfrcore.hpp"
+%include "uKfr/kfr_biquad.hpp"
+%include "uKfr/kfr_bessel.hpp"
+%include "uKfr/kfr_butterworth.hpp"
+%include "uKfr/kfr_chebyshev1.hpp"
+%include "uKfr/kfr_chebyshev2.hpp"
+%include "uKfr/kfr_convolve.hpp"
+%include "uKfr/kfr_dct.hpp"
+%include "uKfr/kfr_dft.hpp"
+%include "uKfr/kfr_fileio.hpp"
+%include "uKfr/kfr_fir.hpp"
+%include "uKfr/kfr_resample.hpp"
+%include "uKfr/kfr_window.hpp"
+%include "uKfr/kfrcore.hpp"
 
 
 typedef double SampleType;
@@ -1615,7 +1615,7 @@ namespace kfr {
 %include "KfrDSP/KfrFIRLowpassFilter.hpp"
 %include "KfrDSP/KfrFIRHighpassFilter.hpp"
 %include "KfrDSP/KfrFIR.hpp"
-%include "IIRFilters.hpp"
+%include "Kfr3/kfr_IIRFilters.hpp"
 
 %include "KfrDSP/KfrWindows.hpp"
 %include "KfrDSP/KfrConvolution.hpp"

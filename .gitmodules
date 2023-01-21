@@ -1,0 +1,51 @@
+[submodule "DSP/itpp-git"]
+	path = itpp-git
+	url = https://git.code.sf.net/p/itpp/git
+[submodule "MusicDSP/freeverb3"]
+	path = MusicDSP/freeverb3
+	url = https://github.com/MckAudio/freeverb3
+[submodule "MusicDSP/chunkware-simple-dynamics"]
+	path = MusicDSP/chunkware-simple-dynamics
+	url = https://github.com/music-dsp-collection/chunkware-simple-dynamics
+[submodule "MusicDSP/sndfilter"]
+	path = MusicDSP/sndfilter
+	url = https://github.com/velipso/sndfilter
+[submodule "MusicDSP/csound"]
+	path = MusicDSP/csound
+	url = https://github.com/csound/csound
+[submodule "MusicDSP/BYOD"]
+	path = MusicDSP/BYOD
+	url = https://github.com/Chowdhury-DSP/BYOD
+[submodule "WDF/rt-wdf_lib"]
+	path = WDF/rt-wdf_lib
+	url = https://github.com/RT-WDF/rt-wdf_lib
+[submodule "WDF/rt-wdf_renderer"]
+	path = WDF/rt-wdf_renderer
+	url = https://github.com/RT-WDF/rt-wdf_renderer
+[submodule "WDF/rt-wdf_renderer-sample-study"]
+	path = WDF/rt-wdf_renderer-sample-study
+	url = https://github.com/shun60s/rt-wdf_renderer-sample-study
+[submodule "WDF/rt-wdf_lv2"]
+	path = WDF/rt-wdf_lv2
+	url = https://github.com/MaxPayne86/rt-wdf_lv2
+[submodule "WDF/Wavy"]
+	path = WDF/Wavy
+	url = https://github.com/stefvenmans/Wavy
+[submodule "WDF/chowdsp_wdf"]
+	path = WDF/chowdsp_wdf
+	url = https://github.com/Chowdhury-DSP/chowdsp_wdf
+[submodule "WDF/differentiable-wdfs"]
+	path = WDF/differentiable-wdfs
+	url = https://github.com/jatinchowdhury18/differentiable-wdfs
+[submodule "Spice/RTspice"]
+	path = Spice/RTspice
+	url = https://github.com/thadeuluiz/RTspice
+[submodule "Spice/spiceAmp"]
+	path = Spice/spiceAmp
+	url = https://github.com/olegkapitonov/spiceAmp
+[submodule "Spice/cspice"]
+	path = Spice/cspice
+	url = https://github.com/andrewytliu/cspice
+[submodule "Spice/SPICE"]
+	path = Spice/SPICE
+	url = https://github.com/s94285/SPICE

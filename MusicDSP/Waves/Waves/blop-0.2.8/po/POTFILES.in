@@ -1,0 +1,23 @@
+# Sources with strings that need translation
+src/adsr_1653.so.c
+src/adsr_1680.so.c
+src/amp_1654.so.c
+src/branch_1673.so.c
+src/dahdsr_2021.so.c
+src/difference_2030.so.c
+src/fmod_1656.so.c
+src/interpolator_1660.so.c
+src/lp4pole_1671.so.c
+src/product_1668.so.c
+src/pulse_1645.so.c
+src/quantiser.so.c
+src/random_1661.so.c
+src/ratio_2034.so.c
+src/sawtooth_1641.so.c
+src/sequencer.so.c
+src/square_1643.so.c
+src/sum_1665.so.c
+src/sync_pulse_2023.so.c
+src/sync_square_1678.so.c
+src/tracker_2025.so.c
+src/triangle_1649.so.c

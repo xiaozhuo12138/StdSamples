@@ -1,0 +1,144 @@
+dnl Process this file with autoconf to produce a configure script
+
+
+AC_INIT(src/adsr_1653.so.c)
+
+AM_CONFIG_HEADER(config.h)
+
+dnl Some variables for wave generation
+
+dnl Wavedata Subdir Where to put wavedata .so files relative to install
+dnl                 path (so they don't end up in LADSPA_PATH)
+dnl Sample Rate     Rate of sampling used for generating tables
+dnl                 (Does not need to match playback sample rate)
+dnl First Note      First MIDI note to generate table for [0-127]
+dnl Note Step       Note interval between subsequent tables
+dnl                  This is set to 6 if --enable-small-wavedata is
+dnl                  set at configure time
+dnl Min Table Size  Minimum wavetable size in samples
+dnl Gibbs           Gibbs compensation to use [0.0-1.0]
+
+wavedata_subdir=blop_files
+sample_rate=48000
+first_note=12
+note_step=1
+min_table_size=128
+gibbs=1.0
+AC_SUBST(wavedata_subdir)
+AC_SUBST(sample_rate)
+AC_SUBST(first_note)
+AC_SUBST(note_step)
+AC_SUBST(min_table_size)
+AC_SUBST(gibbs)
+
+
+dnl Automake
+dnl !!!! Remember to update version !!!!
+AM_INIT_AUTOMAKE(blop, 0.2.8)
+
+dnl This is required to prevent time stamp problems with auto builders,
+dnl such as dpkg (debian)
+AM_MAINTAINER_MODE
+
+dnl Trigger internationalization support
+AM_GNU_GETTEXT([external])
+
+
+dnl Supported --enable and --with options
+
+dnl Have to specify all optimisations used individually, as a simple -O1 or 2, 3
+dnl will cause quantiser to fail. I Have No Idea Why.
+AC_ARG_ENABLE(
+   debug,
+   [  --enable-debug          Enable debugging [no]],
+   [CFLAGS="-pipe -Wall -O0 -g"],
+   [CFLAGS="-pipe -Wall -O3 -Wno-unused -DNO_DEBUG -DPIC -fPIC \
+            -ffast-math -fomit-frame-pointer -funroll-loops"]
+)
+
+AC_ARG_ENABLE(
+  small-wavedata,
+  [  --enable-small-wavedata
+                          Use this to generate smaller wavetable data
+                           for the oscillators. With this option, each
+                           oscillator should be about 50k. Without, it's
+                           nearer 450k.],
+  [note_step=6
+   first_note=24
+  AC_SUBST(note_step)
+  AC_SUBST(first_note)],
+
+dnl  Can't have empty statement - so we just make note_step = note step :)
+
+  [note_step=$note_step
+  AC_SUBST(note_step)]
+)
+
+AC_ARG_WITH(
+  ladspa-prefix,
+  [  --with-ladspa-prefix=LADSPA
+                          Path where LADSPA SDK is installed [/usr]],
+  [ladspa_prefix=$withval
+  AC_SUBST(ladspa_prefix)],
+  [ladspa_prefix=/usr
+  AC_SUBST(ladspa_prefix)]
+)
+
+AC_ARG_WITH(
+  ladspa-plugin-dir,
+  [  --with-ladspa-plugin-dir=DIR
+                          Where to install plugins [LADSPA/lib/ladspa]],
+  [ladspa_plugin_dir=$withval
+  AC_SUBST(ladspa_plugin_dir)],
+  [ladspa_plugin_dir=$ladspa_prefix/lib/ladspa
+  AC_SUBST(ladspa_plugin_dir)]
+)
+
+dnl Checks for programs
+
+
+dnl Checks for libraries
+
+
+dnl Checks for headers
+AC_CHECK_HEADER(
+  $ladspa_prefix/include/ladspa.h,
+  [],
+  [AC_MSG_ERROR( ** Couldn't find ladspa.h)]
+)
+
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_SIZE_T
+
+
+dnl Checks for library functions.
+AC_CHECK_FUNCS(strdup)
+AC_CHECK_FUNC(
+  sinf,
+  [AC_DEFINE(HAVE_SINF, 1, [Define if you have sinf and friends])],
+  [AC_CHECK_LIB(m,
+                sinf,
+                [AC_DEFINE(HAVE_SINF, 1, [Define if you have sinf and friends])],
+                [AC_MSG_WARN( ** No sinf function found - using sin)]
+               )]
+)
+AC_CHECK_FUNC(getopt_long,[], [AC_CHECK_LIB(gnugetopt, getopt_long, [], [AC_MSG_ERROR( ** No getopt_long function found)])])
+
+if test "$HAVE_LIBGNUGETOPT" != ""; then
+  ac_save_LIBS="$LIBS"
+  LIBS= "$ac_save_LIBS -lgnugetopt"
+fi
+
+AC_C99_FUNC_LRINT
+AC_C99_FUNC_LRINTF
+
+dnl Makefiles generated
+AC_OUTPUT(Makefile \
+          doc/Makefile \
+          m4/Makefile \
+          po/Makefile.in \
+          src/Makefile \
+          src/include/Makefile)

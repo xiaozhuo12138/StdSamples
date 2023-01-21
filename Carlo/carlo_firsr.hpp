@@ -150,15 +150,14 @@ namespace Casino::IPP
         size_t  size,nTaps;
         Ipp64f *pTaps;
 
-        FIRLowPass(size_t n, Ipp64f freq)
+        FIRLowPass(size_t n, Ipp64f freq, IppAlgType algType = ippAlgFFT)
         {        
             int specSize,bufferSize;
             FIRSRGetSize<Ipp64f>(n,&specSize,&bufferSize);            
             pSpec = Malloc<Ipp8u>(specSize);
             pBuffer= Malloc<Ipp8u>(bufferSize);
             nTaps   = n;
-            pTaps   = Malloc<Ipp64f>(n);
-            memcpy(pTaps,taps,n*sizeof(Ipp64f));
+            pTaps   = Malloc<Ipp64f>(n);            
             genLowPass(n,freq);
             FIRSRInit<Ipp64f>(pTaps,n,algType,(void*)pSpec);       
         }
@@ -167,15 +166,15 @@ namespace Casino::IPP
             if(pBuffer) Free(pBuffer);
             if(pTaps) Free(pTaps);
         }
-        void genLowPass(Ipp64f freq)
+        void genLowPass(size_t n, Ipp64f freq)
         {
-            Ipp64 taps[n];            
+            Ipp64f taps[n];            
             IppStatus status = ippsFIRGenLowpass_64f(freq,taps,size,ippWinHamming,ippTrue,pBuffer);
             checkStatus(status);            
         }
 
-        void Execute(const T* pSrc, T* pDst, int numIters) {
-            FIRSR_<T>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
+        void Execute(const double* pSrc, double* pDst, int numIters) {
+            FIRSR_<double>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
         }    
     };
 
@@ -186,15 +185,14 @@ namespace Casino::IPP
         size_t  size,nTaps;
         Ipp64f *pTaps;
 
-        FIRHighPass(size_t n, Ipp64f freq)
+        FIRHighPass(size_t n, Ipp64f freq, IppAlgType algType = ippAlgFFT)
         {        
             int specSize,bufferSize;
             FIRSRGetSize<Ipp64f>(n,&specSize,&bufferSize);            
             pSpec = Malloc<Ipp8u>(specSize);
             pBuffer= Malloc<Ipp8u>(bufferSize);
             nTaps   = n;
-            pTaps   = Malloc<Ipp64f>(n);
-            memcpy(pTaps,taps,n*sizeof(Ipp64f));
+            pTaps   = Malloc<Ipp64f>(n);            
             genHighPass(n,freq);
             FIRSRInit<Ipp64f>(pTaps,n,algType,(void*)pSpec);       
         }
@@ -203,15 +201,15 @@ namespace Casino::IPP
             if(pBuffer) Free(pBuffer);
             if(pTaps) Free(pTaps);
         }
-        void genHighPass(Ipp64f freq)
+        void genHighPass(size_t n, Ipp64f freq)
         {
-            Ipp64 taps[n];            
+            Ipp64f taps[n];            
             IppStatus status = ippsFIRGenHighpass_64f(freq,taps,size,ippWinHamming,ippTrue,pBuffer);
             checkStatus(status);            
         }
 
-        void Execute(const T* pSrc, T* pDst, int numIters) {
-            FIRSR_<T>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
+        void Execute(const double* pSrc, double* pDst, int numIters) {
+            FIRSR_<double>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
         }    
     };
 
@@ -223,32 +221,31 @@ namespace Casino::IPP
         size_t  size,nTaps;
         Ipp64f *pTaps;
 
-        FIRBandPass(size_t n, Ipp64f lowFreq, Ipp64f highFreq)
+        FIRBandPass(size_t n, Ipp64f lowFreq, Ipp64f highFreq, IppAlgType algType = ippAlgFFT)
         {        
             int specSize,bufferSize;
             FIRSRGetSize<Ipp64f>(n,&specSize,&bufferSize);            
             pSpec = Malloc<Ipp8u>(specSize);
             pBuffer= Malloc<Ipp8u>(bufferSize);
             nTaps   = n;
-            pTaps   = Malloc<Ipp64f>(n);
-            memcpy(pTaps,taps,n*sizeof(Ipp64f));
+            pTaps   = Malloc<Ipp64f>(n);            
             genBandPass(n,lowFreq, highFreq);
             FIRSRInit<Ipp64f>(pTaps,n,algType,(void*)pSpec);       
         }
-        ~FIRBandStop() {
+        ~FIRBandPass() {
             if(pSpec) Free(pSpec);
             if(pBuffer) Free(pBuffer);
             if(pTaps) Free(pTaps);
         }
-        void genBandPass(Ipp64f lowFreq, Ipp64f highFreq)
+        void genBandPass(size_t n, Ipp64f lowFreq, Ipp64f highFreq)
         {
-            Ipp64 taps[n];            
-            IppStatus status = ippsFIRGenHighpass_64f(lowFreq,highFreq,taps,size,ippWinHamming,ippTrue,pBuffer);
+            Ipp64f taps[n];            
+            IppStatus status = ippsFIRGenBandpass_64f(lowFreq,highFreq,taps,size,ippWinHamming,ippTrue,pBuffer);
             checkStatus(status);            
         }
 
-        void Execute(const T* pSrc, T* pDst, int numIters) {
-            FIRSR_<T>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
+        void Execute(const double* pSrc, double* pDst, int numIters) {
+            FIRSR_<double>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
         }    
     };
 
@@ -260,15 +257,14 @@ namespace Casino::IPP
         size_t  size,nTaps;
         Ipp64f *pTaps;
 
-        FIRBandStop(size_t n, Ipp64f lowFreq, Ipp64f highFreq)
+        FIRBandStop(size_t n, Ipp64f lowFreq, Ipp64f highFreq, IppAlgType algType = ippAlgFFT)
         {        
             int specSize,bufferSize;
             FIRSRGetSize<Ipp64f>(n,&specSize,&bufferSize);            
             pSpec = Malloc<Ipp8u>(specSize);
             pBuffer= Malloc<Ipp8u>(bufferSize);
             nTaps   = n;
-            pTaps   = Malloc<Ipp64f>(n);
-            memcpy(pTaps,taps,n*sizeof(Ipp64f));
+            pTaps   = Malloc<Ipp64f>(n);            
             genBandStop(n,lowFreq, highFreq);
             FIRSRInit<Ipp64f>(pTaps,n,algType,(void*)pSpec);       
         }
@@ -277,14 +273,14 @@ namespace Casino::IPP
             if(pBuffer) Free(pBuffer);
             if(pTaps) Free(pTaps);
         }
-        void genBandStop(Ipp64f lowFreq, Ipp64f highFreq)
+        void genBandStop(size_t n, Ipp64f lowFreq, Ipp64f highFreq)
         {
-            Ipp64 taps[n];            
-            IppStatus status = ippsFIRGenHighpass_64f(lowFreq,highFreq,taps,size,ippWinHamming,ippTrue,pBuffer);
+            Ipp64f taps[n];            
+            IppStatus status = ippsFIRGenBandstop_64f(lowFreq,highFreq,taps,size,ippWinHamming,ippTrue,pBuffer);
             checkStatus(status);            
         }
-        void Execute(const T* pSrc, T* pDst, int numIters) {
-            FIRSR_<T>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
+        void Execute(const double* pSrc, double* pDst, int numIters) {
+            FIRSR_<double>(pSrc,pDst,numIters,(void*)pSpec,NULL,NULL,pBuffer);            
         }    
     };
 
@@ -293,16 +289,16 @@ namespace Casino::IPP
     void filter(FIRSR<T>& filter,const T* pSrc, T* pDst, int numIters) {
         filter.Execute(pSrc,pDst,numIters);
     }
-    void filter(FIRLowPass& filter,const T* pSrc, T* pDst, int numIters) {
+    void filter(FIRLowPass& filter,const double* pSrc, double* pDst, int numIters) {
         filter.Execute(pSrc,pDst,numIters);
     }
-    void filter(FIRHighPass& filter,const T* pSrc, T* pDst, int numIters) {
+    void filter(FIRHighPass& filter,const double* pSrc, double* pDst, int numIters) {
         filter.Execute(pSrc,pDst,numIters);
     }
-    void filter(FIRBandPass& filter,const T* pSrc, T* pDst, int numIters) {
+    void filter(FIRBandPass& filter,const double* pSrc, double* pDst, int numIters) {
         filter.Execute(pSrc,pDst,numIters);
     }
-    void filter(FIRBandStop& filter,const T* pSrc, T* pDst, int numIters) {
+    void filter(FIRBandStop& filter,const double* pSrc, double* pDst, int numIters) {
         filter.Execute(pSrc,pDst,numIters);
     }
 }

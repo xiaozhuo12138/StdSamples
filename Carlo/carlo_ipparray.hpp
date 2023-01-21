@@ -129,4 +129,103 @@ namespace Casino::IPP
             return *this; 
        }        
     };
+    
+    template<typename T>
+    void move(IPPArray<T> & dst, const IPPArray<T> & src)
+    {
+        if(a.len <= dst.len)
+            Move(src.array,dst.array,src.len);
+        else
+            Move(src.array,dst.array,dst.len);
+    }
+
+    template<typename T>
+    void copy(IPPArray<T> & dst, const IPPArray<T> & src)
+    {
+        if(a.len <= dst.len)
+            Move(src.array,dst.array,src.len);
+        else
+            Move(src.array,dst.array,dst.len);
+    }
+
+    template<typename T>
+    void fill(IPPArray<T> & a, const T val)
+    {
+        Set(val,a.array,a.len);
+    }
+
+    template<typename T>
+    void zero(IPPArray<T> & a) {
+        Zero(a.array,a.len);
+    }
+
+    template<typename T>
+    void sinc(const IPPArray<T> & src, IPPArray<T> & dst) {
+        assert(src.len == dst.len);
+        if(src.len <= dst.len)
+            Sinc(src.array,dst.array,src.len);
+        else
+            Sinc(src.array,dst.array,dst.len);
+    }
+
+    template<typename T1, typename T2>
+    void complex(const IPPArray<T1> & real, const IPPArray<T1> & imag, IPPArray<T2> & dst)
+    {
+        assert(real.len == imag.len && real.len == dst.len);
+        RealToComplex(real.array,imag.array,dst.array,dst.len);
+    }
+    template<typename T1, typename T2>
+    void real(const IPPAray<T2> & src, IPPArray<T1> & real, IPPArray<T1> & imag)
+    {
+        assert(real.len == imag.len && real.len == dst.len);
+        ComplexToReal(src.array,real.array,imag.array,src.len);
+    }
+    template<typename T>
+    void magnitude(const IPPArray<T> & real, const IPPArray<T> & imag, IPPArray<T> & dst)
+    {
+        assert(real.len == imag.len && real.len == dst.len);
+        Magnitude(real.array,imag.array,dst.array,dst.len);        
+    }
+    template<typename T>
+    void phase(const IPPArray<T> & real, const IPPArray<T> & imag, IPPArray<T> & dst)
+    {
+        assert(real.len == imag.len && real.len == dst.len);
+        Phase(real.array,imag.array,dst.array,dst.len);
+    }
+    template<typename T>
+    void split_complex(const std::complex<T> & in, IPPArray<T> & real, IPPArray<T> & imag)
+    {
+        assert(real.len == imag.len && real.len == in.len);
+        for(size_t i = 0; i < in.size(); i++)
+        {
+            real[i] = in[i].real();
+            imag[i] = in[i].imag();
+        }
+    }
+    template<typename T>
+    void merge_complex(const IPPArray<T> & real, const IPPArray<T> & imag, IPPArray<T> & dst)
+    {
+        assert(real.len == imag.len && real.len == dst.len);
+        for(size_t i = 0; i < in.size(); i++)
+        {
+            dst[i].real(real[i]);
+            dst[i].imag(imag[i]);
+        }
+    }
+    template<typename T>
+    void cart2polar(const IPPArray<T> & real, const IPPArray<T> & imag, IPPArray<T> & mag, IPPArray<T> & phase)
+    {
+        assert(real.len == imag.len && real.len == dst.len);
+        assert(real.len == mag.len && real.len == phase.len);
+        Cart2Polar(real.array,imag.array,mag.array,phase.array,real.len);
+    }   
+    template<typename T>
+    void polar2cart(const IPPArray<T> & mag, const IPPArray<T> & phase, IPPArray<T> & real, IPPArray<T> & imag)
+    {
+        assert(real.len == imag.len && real.len == dst.len);
+        assert(real.len == mag.len && real.len == phase.len);
+        Polar2Cart(mag.array,phase.array,real.array,imag.array,mag.len);
+    }
+
+
 }

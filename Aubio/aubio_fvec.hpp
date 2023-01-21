@@ -1647,3 +1647,65 @@ FVec<T> create_window (size_t n, window_type wintype) {
         break;
     }  
 }
+
+T
+hztomel (T freq)
+{
+  const T lin_space = 3./200.;
+  const T split_hz = 1000.;
+  const T split_mel = split_hz * lin_space;
+  const T log_space = 27./LOG(6400/1000.);
+  if (freq < 0) {
+    AUBIO_WRN("hztomel: input frequency should be >= 0\n");
+    return 0;
+  }
+  if (freq < split_hz)
+  {
+    return freq * lin_space;
+  } else {
+    return split_mel + log_space * LOG (freq / split_hz);
+  }
+
+}
+
+template<typename T>
+T meltohz (T mel)
+{
+  const T lin_space = 200./3.;
+  const T split_hz = 1000.;
+  const T split_mel = split_hz / lin_space;
+  const T logSpacing = std::pow(6400/1000., 1/27.);
+  if (mel < 0) {
+    std::cerr << "meltohz: input mel should be >= 0\n";
+    return 0;
+  }
+  if (mel < split_mel) {
+    return lin_space * mel;
+  } else {
+    return split_hz * std::pow(logSpacing, mel - split_mel);
+  }
+}
+
+template<typename T>
+T hztomel_htk (T freq)
+{
+  const T split_hz = 700.;
+  const T log_space = 1127.;
+  if (freq < 0) {
+    std::cerr << "hztomel_htk: input frequency should be >= 0\n";
+    return 0;
+  }
+  return log_space * std::log(1 + freq / split_hz);
+}
+
+template<typename T>
+T meltohz_htk (T mel)
+{
+  const T split_hz = 700.;
+  const T log_space = 1./1127.;
+  if (mel < 0) {
+    std::cerr << "meltohz_htk: input frequency should be >= 0\n";
+    return 0;
+  }
+  return split_hz * (std::exp( mel * log_space) - 1.);
+}

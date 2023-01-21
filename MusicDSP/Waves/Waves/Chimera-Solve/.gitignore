@@ -1,0 +1,42 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Code::Blocks
+NetworkSimulation.cbp
+NetworkSimulation.cscope_file_list
+NetworkSimulation.depend
+NetworkSimulation.layout
+lua-5.3.3/src/liblua.so.5.3.3
+lua-5.3.3/src/lua
+lua-5.3.3/src/luac
+
+# other
+bin/
+Makefile

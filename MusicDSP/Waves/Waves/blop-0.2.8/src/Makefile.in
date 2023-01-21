@@ -1,0 +1,833 @@
+# Makefile.in generated automatically by automake 1.5 from Makefile.am.
+
+# Copyright 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001
+# Free Software Foundation, Inc.
+# This Makefile.in is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+@SET_MAKE@
+
+SHELL = @SHELL@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+bindir = @bindir@
+sbindir = @sbindir@
+libexecdir = @libexecdir@
+datadir = @datadir@
+sysconfdir = @sysconfdir@
+sharedstatedir = @sharedstatedir@
+localstatedir = @localstatedir@
+libdir = @libdir@
+infodir = @infodir@
+mandir = @mandir@
+includedir = @includedir@
+oldincludedir = /usr/include
+pkgdatadir = $(datadir)/@PACKAGE@
+pkglibdir = $(libdir)/@PACKAGE@
+pkgincludedir = $(includedir)/@PACKAGE@
+top_builddir = ..
+
+ACLOCAL = @ACLOCAL@
+AUTOCONF = @AUTOCONF@
+AUTOMAKE = @AUTOMAKE@
+AUTOHEADER = @AUTOHEADER@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_DATA = @INSTALL_DATA@
+INSTALL_SCRIPT = @INSTALL_SCRIPT@
+INSTALL_HEADER = $(INSTALL_DATA)
+transform = @program_transform_name@
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
+host_alias = @host_alias@
+host_triplet = @host@
+AMTAR = @AMTAR@
+AWK = @AWK@
+BUILD_INCLUDED_LIBINTL = @BUILD_INCLUDED_LIBINTL@
+CATOBJEXT = @CATOBJEXT@
+CC = @CC@
+DATADIRNAME = @DATADIRNAME@
+DEPDIR = @DEPDIR@
+EXEEXT = @EXEEXT@
+GENCAT = @GENCAT@
+GLIBC21 = @GLIBC21@
+GMSGFMT = @GMSGFMT@
+HAVE_LIB = @HAVE_LIB@
+INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+INSTOBJEXT = @INSTOBJEXT@
+INTLBISON = @INTLBISON@
+INTLLIBS = @INTLLIBS@
+INTLOBJS = @INTLOBJS@
+INTL_LIBTOOL_SUFFIX_PREFIX = @INTL_LIBTOOL_SUFFIX_PREFIX@
+LIB = @LIB@
+LIBICONV = @LIBICONV@
+LIBINTL = @LIBINTL@
+LTLIB = @LTLIB@
+LTLIBICONV = @LTLIBICONV@
+LTLIBINTL = @LTLIBINTL@
+MAINT = @MAINT@
+MKINSTALLDIRS = @MKINSTALLDIRS@
+OBJEXT = @OBJEXT@
+PACKAGE = @PACKAGE@
+POSUB = @POSUB@
+RANLIB = @RANLIB@
+USE_INCLUDED_LIBINTL = @USE_INCLUDED_LIBINTL@
+USE_NLS = @USE_NLS@
+VERSION = @VERSION@
+am__include = @am__include@
+am__quote = @am__quote@
+first_note = @first_note@
+gibbs = @gibbs@
+install_sh = @install_sh@
+ladspa_plugin_dir = @ladspa_plugin_dir@
+ladspa_prefix = @ladspa_prefix@
+min_table_size = @min_table_size@
+note_step = @note_step@
+sample_rate = @sample_rate@
+wavedata_subdir = @wavedata_subdir@
+
+SUBDIRS = include
+AM_CPPFLAGS = -I$(ladspa_prefix)/include -Iinclude -I. \
+              -DLOCALEDIR=\"$(datadir)/locale\"
+
+LINK = $(COMPILE) -nostartfiles -shared -lc -o $@
+CLEANFILES = parabola_1649_data.so.c \
+             sawtooth_1641_data.so.c \
+             square_1643_data.so.c
+
+MAINTAINERCLEANFILES = Makefile.in
+
+pkgbin_PROGRAMS = adsr_1653.so adsr_1680.so amp_1654.so branch_1673.so \
+                  dahdsr_2021.so difference_2030.so fmod_1656.so \
+                  interpolator_1660.so lp4pole_1671.so \
+                  product_1668.so pulse_1645.so quantiser20_2027.so \
+                  quantiser50_2028.so quantiser100_2029.so random_1661.so \
+                  ratio_2034.so sawtooth_1641.so sequencer64_1675.so \
+                  sequencer32_1676.so sequencer16_1677.so square_1643.so \
+                  sum_1665.so sync_pulse_2023.so sync_square_1678.so \
+                  tracker_2025.so triangle_1649.so
+
+
+wavedata_PROGRAMS = sawtooth_1641_data.so \
+                    square_1643_data.so \
+                    parabola_1649_data.so
+
+nodist_sawtooth_1641_data_so_SOURCES = sawtooth_1641_data.so.c
+nodist_square_1643_data_so_SOURCES = square_1643_data.so.c
+nodist_parabola_1649_data_so_SOURCES = parabola_1649_data.so.c
+
+pkgbindir = $(ladspa_plugin_dir)
+wavedatadir = $(ladspa_plugin_dir)/$(wavedata_subdir)
+
+noinst_PROGRAMS = wavegen
+wavegen_SOURCES = wavegen.c wdatutil.c
+wavegen_DEPENDENCIES = include/wdatutil.h include/common.h
+wavegen_LINK = $(COMPILE) -lc -lm -o $@
+
+lp4pole_1671_so_SOURCES = lp4pole_1671.so.c lp4pole_filter.c
+pulse_1645_so_SOURCES = pulse_1645.so.c wavedata.c
+quantiser20_2027_so_SOURCES = quantiser.so.c
+quantiser50_2028_so_SOURCES = quantiser.so.c
+quantiser100_2029_so_SOURCES = quantiser.so.c
+sawtooth_1641_so_SOURCES = sawtooth_1641.so.c wavedata.c
+sequencer64_1675_so_SOURCES = sequencer.so.c
+sequencer32_1676_so_SOURCES = sequencer.so.c
+sequencer16_1677_so_SOURCES = sequencer.so.c
+square_1643_so_SOURCES = square_1643.so.c wavedata.c
+triangle_1649_so_SOURCES = triangle_1649.so.c wavedata.c
+
+adsr_1653_so_DEPENDENCIES = include/common.h
+adsr_1680_so_DEPENDENCIES = include/common.h
+amp_1654_so_DEPENDENCIES = include/math_func.h
+dahdsr_2021_so_DEPENDENCIES = include/common.h
+fmod_1656_so_DEPENDENCIES = include/math_func.h
+lp4pole_1671_so_DEPENDENCIES = include/lp4pole_filter.h include/common.h
+pulse_1645_so_DEPENDENCIES = include/wavedata.h
+quantiser20_2027_so_DEPENDENCIES = include/common.h include/math_func.h
+quantiser50_2028_so_DEPENDENCIES = include/common.h include/math_func.h
+quantiser100_2029_so_DEPENDENCIES = include/common.h include/math_func.h
+random_1661_so_DEPENDENCIES = include/common.h include/math_func.h
+ratio_2034_so_DEPENDENCIES = include/common.h include/math_func.h
+sawtooth_1641_so_DEPENDENCIES = include/wavedata.h
+sequencer16_1677_so_DEPENDENCIES = include/common.h include/math_func.h
+sequencer32_1676_so_DEPENDENCIES = include/common.h include/math_func.h
+sequencer64_1675_so_DEPENDENCIES = include/common.h include/math_func.h
+square_1643_so_DEPENDENCIES = include/wavedata.h
+sync_pulse_2023_so_DEPENDENCIES = include/common.h
+tracker_2025_so_DEPENDENCIES = include/common.h
+triangle_1649_so_DEPENDENCIES = include/wavedata.h
+subdir = src
+mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+CONFIG_HEADER = $(top_builddir)/config.h
+CONFIG_CLEAN_FILES =
+noinst_PROGRAMS = wavegen$(EXEEXT)
+pkgbin_PROGRAMS = adsr_1653.so$(EXEEXT) adsr_1680.so$(EXEEXT) \
+	amp_1654.so$(EXEEXT) branch_1673.so$(EXEEXT) \
+	dahdsr_2021.so$(EXEEXT) difference_2030.so$(EXEEXT) \
+	fmod_1656.so$(EXEEXT) interpolator_1660.so$(EXEEXT) \
+	lp4pole_1671.so$(EXEEXT) product_1668.so$(EXEEXT) \
+	pulse_1645.so$(EXEEXT) quantiser20_2027.so$(EXEEXT) \
+	quantiser50_2028.so$(EXEEXT) quantiser100_2029.so$(EXEEXT) \
+	random_1661.so$(EXEEXT) ratio_2034.so$(EXEEXT) \
+	sawtooth_1641.so$(EXEEXT) sequencer64_1675.so$(EXEEXT) \
+	sequencer32_1676.so$(EXEEXT) sequencer16_1677.so$(EXEEXT) \
+	square_1643.so$(EXEEXT) sum_1665.so$(EXEEXT) \
+	sync_pulse_2023.so$(EXEEXT) sync_square_1678.so$(EXEEXT) \
+	tracker_2025.so$(EXEEXT) triangle_1649.so$(EXEEXT)
+wavedata_PROGRAMS = sawtooth_1641_data.so$(EXEEXT) \
+	square_1643_data.so$(EXEEXT) parabola_1649_data.so$(EXEEXT)
+PROGRAMS = $(noinst_PROGRAMS) $(pkgbin_PROGRAMS) $(wavedata_PROGRAMS)
+
+adsr_1653_so_SOURCES = adsr_1653.so.c
+adsr_1653_so_OBJECTS = adsr_1653.so.$(OBJEXT)
+adsr_1653_so_LDADD = $(LDADD)
+adsr_1653_so_LDFLAGS =
+adsr_1680_so_SOURCES = adsr_1680.so.c
+adsr_1680_so_OBJECTS = adsr_1680.so.$(OBJEXT)
+adsr_1680_so_LDADD = $(LDADD)
+adsr_1680_so_LDFLAGS =
+amp_1654_so_SOURCES = amp_1654.so.c
+amp_1654_so_OBJECTS = amp_1654.so.$(OBJEXT)
+amp_1654_so_LDADD = $(LDADD)
+amp_1654_so_LDFLAGS =
+branch_1673_so_SOURCES = branch_1673.so.c
+branch_1673_so_OBJECTS = branch_1673.so.$(OBJEXT)
+branch_1673_so_LDADD = $(LDADD)
+branch_1673_so_DEPENDENCIES =
+branch_1673_so_LDFLAGS =
+dahdsr_2021_so_SOURCES = dahdsr_2021.so.c
+dahdsr_2021_so_OBJECTS = dahdsr_2021.so.$(OBJEXT)
+dahdsr_2021_so_LDADD = $(LDADD)
+dahdsr_2021_so_LDFLAGS =
+difference_2030_so_SOURCES = difference_2030.so.c
+difference_2030_so_OBJECTS = difference_2030.so.$(OBJEXT)
+difference_2030_so_LDADD = $(LDADD)
+difference_2030_so_DEPENDENCIES =
+difference_2030_so_LDFLAGS =
+fmod_1656_so_SOURCES = fmod_1656.so.c
+fmod_1656_so_OBJECTS = fmod_1656.so.$(OBJEXT)
+fmod_1656_so_LDADD = $(LDADD)
+fmod_1656_so_LDFLAGS =
+interpolator_1660_so_SOURCES = interpolator_1660.so.c
+interpolator_1660_so_OBJECTS = interpolator_1660.so.$(OBJEXT)
+interpolator_1660_so_LDADD = $(LDADD)
+interpolator_1660_so_DEPENDENCIES =
+interpolator_1660_so_LDFLAGS =
+am_lp4pole_1671_so_OBJECTS = lp4pole_1671.so.$(OBJEXT) \
+	lp4pole_filter.$(OBJEXT)
+lp4pole_1671_so_OBJECTS = $(am_lp4pole_1671_so_OBJECTS)
+lp4pole_1671_so_LDADD = $(LDADD)
+lp4pole_1671_so_LDFLAGS =
+nodist_parabola_1649_data_so_OBJECTS = parabola_1649_data.so.$(OBJEXT)
+parabola_1649_data_so_OBJECTS = $(nodist_parabola_1649_data_so_OBJECTS)
+parabola_1649_data_so_LDADD = $(LDADD)
+parabola_1649_data_so_DEPENDENCIES =
+parabola_1649_data_so_LDFLAGS =
+product_1668_so_SOURCES = product_1668.so.c
+product_1668_so_OBJECTS = product_1668.so.$(OBJEXT)
+product_1668_so_LDADD = $(LDADD)
+product_1668_so_DEPENDENCIES =
+product_1668_so_LDFLAGS =
+am_pulse_1645_so_OBJECTS = pulse_1645.so.$(OBJEXT) wavedata.$(OBJEXT)
+pulse_1645_so_OBJECTS = $(am_pulse_1645_so_OBJECTS)
+pulse_1645_so_LDADD = $(LDADD)
+pulse_1645_so_LDFLAGS =
+am_quantiser100_2029_so_OBJECTS = quantiser.so.$(OBJEXT)
+quantiser100_2029_so_OBJECTS = $(am_quantiser100_2029_so_OBJECTS)
+quantiser100_2029_so_LDADD = $(LDADD)
+quantiser100_2029_so_LDFLAGS =
+am_quantiser20_2027_so_OBJECTS = quantiser.so.$(OBJEXT)
+quantiser20_2027_so_OBJECTS = $(am_quantiser20_2027_so_OBJECTS)
+quantiser20_2027_so_LDADD = $(LDADD)
+quantiser20_2027_so_LDFLAGS =
+am_quantiser50_2028_so_OBJECTS = quantiser.so.$(OBJEXT)
+quantiser50_2028_so_OBJECTS = $(am_quantiser50_2028_so_OBJECTS)
+quantiser50_2028_so_LDADD = $(LDADD)
+quantiser50_2028_so_LDFLAGS =
+random_1661_so_SOURCES = random_1661.so.c
+random_1661_so_OBJECTS = random_1661.so.$(OBJEXT)
+random_1661_so_LDADD = $(LDADD)
+random_1661_so_LDFLAGS =
+ratio_2034_so_SOURCES = ratio_2034.so.c
+ratio_2034_so_OBJECTS = ratio_2034.so.$(OBJEXT)
+ratio_2034_so_LDADD = $(LDADD)
+ratio_2034_so_LDFLAGS =
+am_sawtooth_1641_so_OBJECTS = sawtooth_1641.so.$(OBJEXT) \
+	wavedata.$(OBJEXT)
+sawtooth_1641_so_OBJECTS = $(am_sawtooth_1641_so_OBJECTS)
+sawtooth_1641_so_LDADD = $(LDADD)
+sawtooth_1641_so_LDFLAGS =
+nodist_sawtooth_1641_data_so_OBJECTS = sawtooth_1641_data.so.$(OBJEXT)
+sawtooth_1641_data_so_OBJECTS = $(nodist_sawtooth_1641_data_so_OBJECTS)
+sawtooth_1641_data_so_LDADD = $(LDADD)
+sawtooth_1641_data_so_DEPENDENCIES =
+sawtooth_1641_data_so_LDFLAGS =
+am_sequencer16_1677_so_OBJECTS = sequencer.so.$(OBJEXT)
+sequencer16_1677_so_OBJECTS = $(am_sequencer16_1677_so_OBJECTS)
+sequencer16_1677_so_LDADD = $(LDADD)
+sequencer16_1677_so_LDFLAGS =
+am_sequencer32_1676_so_OBJECTS = sequencer.so.$(OBJEXT)
+sequencer32_1676_so_OBJECTS = $(am_sequencer32_1676_so_OBJECTS)
+sequencer32_1676_so_LDADD = $(LDADD)
+sequencer32_1676_so_LDFLAGS =
+am_sequencer64_1675_so_OBJECTS = sequencer.so.$(OBJEXT)
+sequencer64_1675_so_OBJECTS = $(am_sequencer64_1675_so_OBJECTS)
+sequencer64_1675_so_LDADD = $(LDADD)
+sequencer64_1675_so_LDFLAGS =
+am_square_1643_so_OBJECTS = square_1643.so.$(OBJEXT) wavedata.$(OBJEXT)
+square_1643_so_OBJECTS = $(am_square_1643_so_OBJECTS)
+square_1643_so_LDADD = $(LDADD)
+square_1643_so_LDFLAGS =
+nodist_square_1643_data_so_OBJECTS = square_1643_data.so.$(OBJEXT)
+square_1643_data_so_OBJECTS = $(nodist_square_1643_data_so_OBJECTS)
+square_1643_data_so_LDADD = $(LDADD)
+square_1643_data_so_DEPENDENCIES =
+square_1643_data_so_LDFLAGS =
+sum_1665_so_SOURCES = sum_1665.so.c
+sum_1665_so_OBJECTS = sum_1665.so.$(OBJEXT)
+sum_1665_so_LDADD = $(LDADD)
+sum_1665_so_DEPENDENCIES =
+sum_1665_so_LDFLAGS =
+sync_pulse_2023_so_SOURCES = sync_pulse_2023.so.c
+sync_pulse_2023_so_OBJECTS = sync_pulse_2023.so.$(OBJEXT)
+sync_pulse_2023_so_LDADD = $(LDADD)
+sync_pulse_2023_so_LDFLAGS =
+sync_square_1678_so_SOURCES = sync_square_1678.so.c
+sync_square_1678_so_OBJECTS = sync_square_1678.so.$(OBJEXT)
+sync_square_1678_so_LDADD = $(LDADD)
+sync_square_1678_so_DEPENDENCIES =
+sync_square_1678_so_LDFLAGS =
+tracker_2025_so_SOURCES = tracker_2025.so.c
+tracker_2025_so_OBJECTS = tracker_2025.so.$(OBJEXT)
+tracker_2025_so_LDADD = $(LDADD)
+tracker_2025_so_LDFLAGS =
+am_triangle_1649_so_OBJECTS = triangle_1649.so.$(OBJEXT) \
+	wavedata.$(OBJEXT)
+triangle_1649_so_OBJECTS = $(am_triangle_1649_so_OBJECTS)
+triangle_1649_so_LDADD = $(LDADD)
+triangle_1649_so_LDFLAGS =
+am_wavegen_OBJECTS = wavegen.$(OBJEXT) wdatutil.$(OBJEXT)
+wavegen_OBJECTS = $(am_wavegen_OBJECTS)
+wavegen_LDADD = $(LDADD)
+wavegen_LDFLAGS =
+
+DEFS = @DEFS@
+DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
+CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+depcomp = $(SHELL) $(top_srcdir)/depcomp
+@AMDEP_TRUE@DEP_FILES = $(DEPDIR)/adsr_1653.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/adsr_1680.so.Po $(DEPDIR)/amp_1654.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/branch_1673.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/dahdsr_2021.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/difference_2030.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/fmod_1656.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/interpolator_1660.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/lp4pole_1671.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/lp4pole_filter.Po \
+@AMDEP_TRUE@	$(DEPDIR)/parabola_1649_data.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/product_1668.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/pulse_1645.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/quantiser.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/random_1661.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/ratio_2034.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sawtooth_1641.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sawtooth_1641_data.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sequencer.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/square_1643.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/square_1643_data.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sum_1665.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sync_pulse_2023.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/sync_square_1678.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/tracker_2025.so.Po \
+@AMDEP_TRUE@	$(DEPDIR)/triangle_1649.so.Po $(DEPDIR)/wavedata.Po \
+@AMDEP_TRUE@	$(DEPDIR)/wavegen.Po $(DEPDIR)/wdatutil.Po
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+CFLAGS = @CFLAGS@
+DIST_SOURCES = adsr_1653.so.c adsr_1680.so.c amp_1654.so.c \
+	branch_1673.so.c dahdsr_2021.so.c difference_2030.so.c \
+	fmod_1656.so.c interpolator_1660.so.c \
+	$(lp4pole_1671_so_SOURCES) product_1668.so.c \
+	$(pulse_1645_so_SOURCES) $(quantiser100_2029_so_SOURCES) \
+	$(quantiser20_2027_so_SOURCES) $(quantiser50_2028_so_SOURCES) \
+	random_1661.so.c ratio_2034.so.c $(sawtooth_1641_so_SOURCES) \
+	$(sequencer16_1677_so_SOURCES) $(sequencer32_1676_so_SOURCES) \
+	$(sequencer64_1675_so_SOURCES) $(square_1643_so_SOURCES) \
+	sum_1665.so.c sync_pulse_2023.so.c sync_square_1678.so.c \
+	tracker_2025.so.c $(triangle_1649_so_SOURCES) \
+	$(wavegen_SOURCES)
+
+RECURSIVE_TARGETS = info-recursive dvi-recursive install-info-recursive \
+	uninstall-info-recursive all-recursive install-data-recursive \
+	install-exec-recursive installdirs-recursive install-recursive \
+	uninstall-recursive check-recursive installcheck-recursive
+DIST_COMMON = Makefile.am Makefile.in
+DIST_SUBDIRS = $(SUBDIRS)
+SOURCES = adsr_1653.so.c adsr_1680.so.c amp_1654.so.c branch_1673.so.c dahdsr_2021.so.c difference_2030.so.c fmod_1656.so.c interpolator_1660.so.c $(lp4pole_1671_so_SOURCES) $(nodist_parabola_1649_data_so_SOURCES) product_1668.so.c $(pulse_1645_so_SOURCES) $(quantiser100_2029_so_SOURCES) $(quantiser20_2027_so_SOURCES) $(quantiser50_2028_so_SOURCES) random_1661.so.c ratio_2034.so.c $(sawtooth_1641_so_SOURCES) $(nodist_sawtooth_1641_data_so_SOURCES) $(sequencer16_1677_so_SOURCES) $(sequencer32_1676_so_SOURCES) $(sequencer64_1675_so_SOURCES) $(square_1643_so_SOURCES) $(nodist_square_1643_data_so_SOURCES) sum_1665.so.c sync_pulse_2023.so.c sync_square_1678.so.c tracker_2025.so.c $(triangle_1649_so_SOURCES) $(wavegen_SOURCES)
+
+all: all-recursive
+
+.SUFFIXES:
+.SUFFIXES: .c .o .obj
+$(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
+	cd $(top_srcdir) && \
+	  $(AUTOMAKE) --gnu  src/Makefile
+Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_HEADERS= CONFIG_LINKS= \
+	  CONFIG_FILES=$(subdir)/$@ $(SHELL) ./config.status
+
+clean-noinstPROGRAMS:
+	-test -z "$(noinst_PROGRAMS)" || rm -f $(noinst_PROGRAMS)
+install-pkgbinPROGRAMS: $(pkgbin_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(pkgbindir)
+	@list='$(pkgbin_PROGRAMS)'; for p in $$list; do \
+	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  if test -f $$p \
+	  ; then \
+	    f=`echo $$p1|sed '$(transform);s/$$/$(EXEEXT)/'`; \
+	   echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(pkgbindir)/$$f"; \
+	   $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(pkgbindir)/$$f; \
+	  else :; fi; \
+	done
+
+uninstall-pkgbinPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(pkgbin_PROGRAMS)'; for p in $$list; do \
+	  f=`echo $$p|sed 's/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
+	  echo " rm -f $(DESTDIR)$(pkgbindir)/$$f"; \
+	  rm -f $(DESTDIR)$(pkgbindir)/$$f; \
+	done
+
+clean-pkgbinPROGRAMS:
+	-test -z "$(pkgbin_PROGRAMS)" || rm -f $(pkgbin_PROGRAMS)
+install-wavedataPROGRAMS: $(wavedata_PROGRAMS)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(wavedatadir)
+	@list='$(wavedata_PROGRAMS)'; for p in $$list; do \
+	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+	  if test -f $$p \
+	  ; then \
+	    f=`echo $$p1|sed '$(transform);s/$$/$(EXEEXT)/'`; \
+	   echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(wavedatadir)/$$f"; \
+	   $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$p $(DESTDIR)$(wavedatadir)/$$f; \
+	  else :; fi; \
+	done
+
+uninstall-wavedataPROGRAMS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(wavedata_PROGRAMS)'; for p in $$list; do \
+	  f=`echo $$p|sed 's/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
+	  echo " rm -f $(DESTDIR)$(wavedatadir)/$$f"; \
+	  rm -f $(DESTDIR)$(wavedatadir)/$$f; \
+	done
+
+clean-wavedataPROGRAMS:
+	-test -z "$(wavedata_PROGRAMS)" || rm -f $(wavedata_PROGRAMS)
+adsr_1653.so$(EXEEXT): $(adsr_1653_so_OBJECTS) $(adsr_1653_so_DEPENDENCIES) 
+	@rm -f adsr_1653.so$(EXEEXT)
+	$(LINK) $(adsr_1653_so_LDFLAGS) $(adsr_1653_so_OBJECTS) $(adsr_1653_so_LDADD) $(LIBS)
+adsr_1680.so$(EXEEXT): $(adsr_1680_so_OBJECTS) $(adsr_1680_so_DEPENDENCIES) 
+	@rm -f adsr_1680.so$(EXEEXT)
+	$(LINK) $(adsr_1680_so_LDFLAGS) $(adsr_1680_so_OBJECTS) $(adsr_1680_so_LDADD) $(LIBS)
+amp_1654.so$(EXEEXT): $(amp_1654_so_OBJECTS) $(amp_1654_so_DEPENDENCIES) 
+	@rm -f amp_1654.so$(EXEEXT)
+	$(LINK) $(amp_1654_so_LDFLAGS) $(amp_1654_so_OBJECTS) $(amp_1654_so_LDADD) $(LIBS)
+branch_1673.so$(EXEEXT): $(branch_1673_so_OBJECTS) $(branch_1673_so_DEPENDENCIES) 
+	@rm -f branch_1673.so$(EXEEXT)
+	$(LINK) $(branch_1673_so_LDFLAGS) $(branch_1673_so_OBJECTS) $(branch_1673_so_LDADD) $(LIBS)
+dahdsr_2021.so$(EXEEXT): $(dahdsr_2021_so_OBJECTS) $(dahdsr_2021_so_DEPENDENCIES) 
+	@rm -f dahdsr_2021.so$(EXEEXT)
+	$(LINK) $(dahdsr_2021_so_LDFLAGS) $(dahdsr_2021_so_OBJECTS) $(dahdsr_2021_so_LDADD) $(LIBS)
+difference_2030.so$(EXEEXT): $(difference_2030_so_OBJECTS) $(difference_2030_so_DEPENDENCIES) 
+	@rm -f difference_2030.so$(EXEEXT)
+	$(LINK) $(difference_2030_so_LDFLAGS) $(difference_2030_so_OBJECTS) $(difference_2030_so_LDADD) $(LIBS)
+fmod_1656.so$(EXEEXT): $(fmod_1656_so_OBJECTS) $(fmod_1656_so_DEPENDENCIES) 
+	@rm -f fmod_1656.so$(EXEEXT)
+	$(LINK) $(fmod_1656_so_LDFLAGS) $(fmod_1656_so_OBJECTS) $(fmod_1656_so_LDADD) $(LIBS)
+interpolator_1660.so$(EXEEXT): $(interpolator_1660_so_OBJECTS) $(interpolator_1660_so_DEPENDENCIES) 
+	@rm -f interpolator_1660.so$(EXEEXT)
+	$(LINK) $(interpolator_1660_so_LDFLAGS) $(interpolator_1660_so_OBJECTS) $(interpolator_1660_so_LDADD) $(LIBS)
+lp4pole_1671.so$(EXEEXT): $(lp4pole_1671_so_OBJECTS) $(lp4pole_1671_so_DEPENDENCIES) 
+	@rm -f lp4pole_1671.so$(EXEEXT)
+	$(LINK) $(lp4pole_1671_so_LDFLAGS) $(lp4pole_1671_so_OBJECTS) $(lp4pole_1671_so_LDADD) $(LIBS)
+parabola_1649_data.so$(EXEEXT): $(parabola_1649_data_so_OBJECTS) $(parabola_1649_data_so_DEPENDENCIES) 
+	@rm -f parabola_1649_data.so$(EXEEXT)
+	$(LINK) $(parabola_1649_data_so_LDFLAGS) $(parabola_1649_data_so_OBJECTS) $(parabola_1649_data_so_LDADD) $(LIBS)
+product_1668.so$(EXEEXT): $(product_1668_so_OBJECTS) $(product_1668_so_DEPENDENCIES) 
+	@rm -f product_1668.so$(EXEEXT)
+	$(LINK) $(product_1668_so_LDFLAGS) $(product_1668_so_OBJECTS) $(product_1668_so_LDADD) $(LIBS)
+pulse_1645.so$(EXEEXT): $(pulse_1645_so_OBJECTS) $(pulse_1645_so_DEPENDENCIES) 
+	@rm -f pulse_1645.so$(EXEEXT)
+	$(LINK) $(pulse_1645_so_LDFLAGS) $(pulse_1645_so_OBJECTS) $(pulse_1645_so_LDADD) $(LIBS)
+random_1661.so$(EXEEXT): $(random_1661_so_OBJECTS) $(random_1661_so_DEPENDENCIES) 
+	@rm -f random_1661.so$(EXEEXT)
+	$(LINK) $(random_1661_so_LDFLAGS) $(random_1661_so_OBJECTS) $(random_1661_so_LDADD) $(LIBS)
+ratio_2034.so$(EXEEXT): $(ratio_2034_so_OBJECTS) $(ratio_2034_so_DEPENDENCIES) 
+	@rm -f ratio_2034.so$(EXEEXT)
+	$(LINK) $(ratio_2034_so_LDFLAGS) $(ratio_2034_so_OBJECTS) $(ratio_2034_so_LDADD) $(LIBS)
+sawtooth_1641.so$(EXEEXT): $(sawtooth_1641_so_OBJECTS) $(sawtooth_1641_so_DEPENDENCIES) 
+	@rm -f sawtooth_1641.so$(EXEEXT)
+	$(LINK) $(sawtooth_1641_so_LDFLAGS) $(sawtooth_1641_so_OBJECTS) $(sawtooth_1641_so_LDADD) $(LIBS)
+sawtooth_1641_data.so$(EXEEXT): $(sawtooth_1641_data_so_OBJECTS) $(sawtooth_1641_data_so_DEPENDENCIES) 
+	@rm -f sawtooth_1641_data.so$(EXEEXT)
+	$(LINK) $(sawtooth_1641_data_so_LDFLAGS) $(sawtooth_1641_data_so_OBJECTS) $(sawtooth_1641_data_so_LDADD) $(LIBS)
+square_1643.so$(EXEEXT): $(square_1643_so_OBJECTS) $(square_1643_so_DEPENDENCIES) 
+	@rm -f square_1643.so$(EXEEXT)
+	$(LINK) $(square_1643_so_LDFLAGS) $(square_1643_so_OBJECTS) $(square_1643_so_LDADD) $(LIBS)
+square_1643_data.so$(EXEEXT): $(square_1643_data_so_OBJECTS) $(square_1643_data_so_DEPENDENCIES) 
+	@rm -f square_1643_data.so$(EXEEXT)
+	$(LINK) $(square_1643_data_so_LDFLAGS) $(square_1643_data_so_OBJECTS) $(square_1643_data_so_LDADD) $(LIBS)
+sum_1665.so$(EXEEXT): $(sum_1665_so_OBJECTS) $(sum_1665_so_DEPENDENCIES) 
+	@rm -f sum_1665.so$(EXEEXT)
+	$(LINK) $(sum_1665_so_LDFLAGS) $(sum_1665_so_OBJECTS) $(sum_1665_so_LDADD) $(LIBS)
+sync_pulse_2023.so$(EXEEXT): $(sync_pulse_2023_so_OBJECTS) $(sync_pulse_2023_so_DEPENDENCIES) 
+	@rm -f sync_pulse_2023.so$(EXEEXT)
+	$(LINK) $(sync_pulse_2023_so_LDFLAGS) $(sync_pulse_2023_so_OBJECTS) $(sync_pulse_2023_so_LDADD) $(LIBS)
+sync_square_1678.so$(EXEEXT): $(sync_square_1678_so_OBJECTS) $(sync_square_1678_so_DEPENDENCIES) 
+	@rm -f sync_square_1678.so$(EXEEXT)
+	$(LINK) $(sync_square_1678_so_LDFLAGS) $(sync_square_1678_so_OBJECTS) $(sync_square_1678_so_LDADD) $(LIBS)
+tracker_2025.so$(EXEEXT): $(tracker_2025_so_OBJECTS) $(tracker_2025_so_DEPENDENCIES) 
+	@rm -f tracker_2025.so$(EXEEXT)
+	$(LINK) $(tracker_2025_so_LDFLAGS) $(tracker_2025_so_OBJECTS) $(tracker_2025_so_LDADD) $(LIBS)
+triangle_1649.so$(EXEEXT): $(triangle_1649_so_OBJECTS) $(triangle_1649_so_DEPENDENCIES) 
+	@rm -f triangle_1649.so$(EXEEXT)
+	$(LINK) $(triangle_1649_so_LDFLAGS) $(triangle_1649_so_OBJECTS) $(triangle_1649_so_LDADD) $(LIBS)
+wavegen$(EXEEXT): $(wavegen_OBJECTS) $(wavegen_DEPENDENCIES) 
+	@rm -f wavegen$(EXEEXT)
+	$(wavegen_LINK) $(wavegen_LDFLAGS) $(wavegen_OBJECTS) $(wavegen_LDADD) $(LIBS)
+
+mostlyclean-compile:
+	-rm -f *.$(OBJEXT) core *.core
+
+distclean-compile:
+	-rm -f *.tab.c
+
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/adsr_1653.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/adsr_1680.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/amp_1654.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/branch_1673.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/dahdsr_2021.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/difference_2030.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/fmod_1656.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/interpolator_1660.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/lp4pole_1671.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/lp4pole_filter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/parabola_1649_data.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/product_1668.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/pulse_1645.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/quantiser.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/random_1661.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/ratio_2034.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sawtooth_1641.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sawtooth_1641_data.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sequencer.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/square_1643.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/square_1643_data.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sum_1665.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sync_pulse_2023.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/sync_square_1678.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/tracker_2025.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/triangle_1649.so.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/wavedata.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/wavegen.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@$(DEPDIR)/wdatutil.Po@am__quote@
+
+distclean-depend:
+	-rm -rf $(DEPDIR)
+
+.c.o:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(COMPILE) -c `test -f $< || echo '$(srcdir)/'`$<
+
+.c.obj:
+@AMDEP_TRUE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+	$(COMPILE) -c `cygpath -w $<`
+CCDEPMODE = @CCDEPMODE@
+uninstall-info-am:
+
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+$(RECURSIVE_TARGETS):
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	dot_seen=no; \
+	case "$@" in \
+	  distclean-* | maintainer-clean-*) list='$(DIST_SUBDIRS)' ;; \
+	  *) list='$(SUBDIRS)' ;; \
+	esac; \
+	rev=''; for subdir in $$list; do \
+	  if test "$$subdir" = "."; then :; else \
+	    rev="$$subdir $$rev"; \
+	  fi; \
+	done; \
+	rev="$$rev ."; \
+	target=`echo $@ | sed s/-recursive//`; \
+	for subdir in $$rev; do \
+	  echo "Making $$target in $$subdir"; \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
+	done
+
+tags: TAGS
+
+ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	mkid -fID $$unique $(LISP)
+
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
+		$(TAGS_FILES) $(LISP)
+	tags=; \
+	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+	  fi; \
+	done; \
+	list='$(SOURCES) $(HEADERS) $(TAGS_FILES)'; \
+	unique=`for i in $$list; do \
+	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+	  done | \
+	  $(AWK) '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || etags $(ETAGS_ARGS) $$tags  $$unique $(LISP)
+
+GTAGS:
+	here=`CDPATH=: && cd $(top_builddir) && pwd` \
+	  && cd $(top_srcdir) \
+	  && gtags -i $(GTAGS_ARGS) $$here
+
+distclean-tags:
+	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH
+
+DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+
+top_distdir = ..
+distdir = $(top_distdir)/$(PACKAGE)-$(VERSION)
+
+distdir: $(DISTFILES)
+	@for file in $(DISTFILES); do \
+	  if test -f $$file; then d=.; else d=$(srcdir); fi; \
+	  dir=`echo "$$file" | sed -e 's,/[^/]*$$,,'`; \
+	  if test "$$dir" != "$$file" && test "$$dir" != "."; then \
+	    $(mkinstalldirs) "$(distdir)/$$dir"; \
+	  fi; \
+	  if test -d $$d/$$file; then \
+	    cp -pR $$d/$$file $(distdir) \
+	    || exit 1; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || cp -p $$d/$$file $(distdir)/$$file \
+	    || exit 1; \
+	  fi; \
+	done
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
+	    || exit 1; \
+	    (cd $$subdir && \
+	      $(MAKE) $(AM_MAKEFLAGS) \
+	        top_distdir="$(top_distdir)" \
+	        distdir=../$(distdir)/$$subdir \
+	        distdir) \
+	      || exit 1; \
+	  fi; \
+	done
+check-am: all-am
+check: check-recursive
+all-am: Makefile $(PROGRAMS)
+installdirs: installdirs-recursive
+installdirs-am:
+	$(mkinstalldirs) $(DESTDIR)$(pkgbindir) $(DESTDIR)$(wavedatadir)
+
+install: install-recursive
+install-exec: install-exec-recursive
+install-data: install-data-recursive
+uninstall: uninstall-recursive
+
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+
+installcheck: installcheck-recursive
+install-strip:
+	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
+	  `test -z '$(STRIP)' || \
+	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
+mostlyclean-generic:
+
+clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+
+distclean-generic:
+	-rm -f Makefile $(CONFIG_CLEAN_FILES) stamp-h stamp-h[0-9]*
+
+maintainer-clean-generic:
+	@echo "This command is intended for maintainers to use"
+	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+clean: clean-recursive
+
+clean-am: clean-generic clean-noinstPROGRAMS clean-pkgbinPROGRAMS \
+	clean-wavedataPROGRAMS mostlyclean-am
+
+distclean: distclean-recursive
+
+distclean-am: clean-am distclean-compile distclean-depend \
+	distclean-generic distclean-tags
+
+dvi: dvi-recursive
+
+dvi-am:
+
+info: info-recursive
+
+info-am:
+
+install-data-am: install-pkgbinPROGRAMS install-wavedataPROGRAMS
+
+install-exec-am:
+
+install-info: install-info-recursive
+
+install-man:
+
+installcheck-am:
+
+maintainer-clean: maintainer-clean-recursive
+
+maintainer-clean-am: distclean-am maintainer-clean-generic
+
+mostlyclean: mostlyclean-recursive
+
+mostlyclean-am: mostlyclean-compile mostlyclean-generic
+
+uninstall-am: uninstall-info-am uninstall-pkgbinPROGRAMS \
+	uninstall-wavedataPROGRAMS
+
+uninstall-info: uninstall-info-recursive
+
+.PHONY: $(RECURSIVE_TARGETS) GTAGS all all-am check check-am clean \
+	clean-generic clean-noinstPROGRAMS clean-pkgbinPROGRAMS \
+	clean-recursive clean-wavedataPROGRAMS distclean \
+	distclean-compile distclean-depend distclean-generic \
+	distclean-recursive distclean-tags distdir dvi dvi-am \
+	dvi-recursive info info-am info-recursive install install-am \
+	install-data install-data-am install-data-recursive \
+	install-exec install-exec-am install-exec-recursive \
+	install-info install-info-am install-info-recursive install-man \
+	install-pkgbinPROGRAMS install-recursive install-strip \
+	install-wavedataPROGRAMS installcheck installcheck-am \
+	installdirs installdirs-am installdirs-recursive \
+	maintainer-clean maintainer-clean-generic \
+	maintainer-clean-recursive mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-recursive tags tags-recursive \
+	uninstall uninstall-am uninstall-info-am \
+	uninstall-info-recursive uninstall-pkgbinPROGRAMS \
+	uninstall-recursive uninstall-wavedataPROGRAMS
+
+
+clean:
+	rm -f *.so *.so.o
+
+wavedata.o: wavedata.c include/wavedata.h include/interpolate.h \
+                       include/math_func.h include/common.h
+	$(COMPILE) -DWAVEDATA_SUBDIR=\"$(wavedata_subdir)\" -c wavedata.c
+
+sequencer64_1675.so$(EXEEXT): sequencer.so.c
+	$(LINK) -DSEQUENCER_MAX_INPUTS=64 -DSEQUENCER_BASE_ID=1675 sequencer.so.c
+
+sequencer32_1676.so$(EXEEXT): sequencer.so.c
+	$(LINK) -DSEQUENCER_MAX_INPUTS=32 -DSEQUENCER_BASE_ID=1676 sequencer.so.c
+
+sequencer16_1677.so$(EXEEXT): sequencer.so.c
+	$(LINK) -DSEQUENCER_MAX_INPUTS=16 -DSEQUENCER_BASE_ID=1677 sequencer.so.c
+
+quantiser20_2027.so$(EXEEXT): quantiser.so.c
+	$(LINK) -O0 -DQUANTISER_MAX_INPUTS=20 -DQUANTISER_BASE_ID=2027 -lm quantiser.so.c
+
+quantiser50_2028.so$(EXEEXT): quantiser.so.c
+	$(LINK) -O0 -DQUANTISER_MAX_INPUTS=50 -DQUANTISER_BASE_ID=2028 -lm quantiser.so.c
+
+quantiser100_2029.so$(EXEEXT): quantiser.so.c
+	$(LINK) -O0 -DQUANTISER_MAX_INPUTS=100 -DQUANTISER_BASE_ID=2029 -lm quantiser.so.c
+
+parabola_1649_data.so.c: wavegen
+	./wavegen -r $(sample_rate) -f $(first_note) -s $(note_step) \
+          -m $(min_table_size) -g $(gibbs) \
+          -w parabola -p parabola -o parabola_1649_data.so.c
+
+sawtooth_1641_data.so.c: wavegen
+	./wavegen -r $(sample_rate) -f $(first_note) -s $(note_step) \
+          -m $(min_table_size) -g $(gibbs) \
+          -w saw -p sawtooth -o sawtooth_1641_data.so.c
+
+square_1643_data.so.c: wavegen
+	./wavegen -r $(sample_rate) -f $(first_note) -s $(note_step) \
+          -m $(min_table_size) -g $(gibbs) \
+          -w square -p square -o square_1643_data.so.c
+# Tell versions [3.59,3.63) of GNU make to not export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

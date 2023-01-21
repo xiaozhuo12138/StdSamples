@@ -749,13 +749,13 @@ static int luaCallback( const void *inputBuffer, void *outputBuffer,
                 wave->buffer = (float*)realloc(wave->buffer,wave->size*sizeof(float));
             }
             for(size_t x = 0; x < framesPerBuffer; x++) {
-                if(numInputChannels == 1) {
-                    wave->buffer[pos + x] = ((float*)inputBuffer)[x++];
+                if(numChannelsInput == 1) {
+                    wave->buffer[wave->pos + x] = ((float*)inputBuffer)[x++];
                     if(x >= framesPerBuffer) break;
                 }
-                else if(numInputChannels == 2) {
-                    wave->buffer[pos + x] = ((float*)inputBuffer)[x++];
-                    wave->buffer[pos + x] = ((float*)inputBuffer)[x++];
+                else if(numChannelsInput == 2) {
+                    wave->buffer[wave->pos + x] = ((float*)inputBuffer)[x++];
+                    wave->buffer[wave->pos + x] = ((float*)inputBuffer)[x++];
                     if(x >= 2*framesPerBuffer) break;
                 }
                 if((wave->pos+x) >= wave->time && wave->timed) break;
@@ -869,9 +869,9 @@ int InitAudio(int sample_rate, int frames_per_second)
     outputParameters.suggestedLatency = Pa_GetDeviceInfo( outputParameters.device )->defaultLowOutputLatency;
     outputParameters.hostApiSpecificStreamInfo = NULL;
 
-    numChannelsOutput = num_channels;
-    numChannelsInput = num_channels;
-    audioSampleRate = sample_rate;
+    numChannelsOutput = 2;
+    numChannelsInput  = 2;
+    audioSampleRate   = sample_rate;
 
     err = Pa_OpenStream(
               &stream,

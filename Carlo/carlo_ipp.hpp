@@ -215,6 +215,17 @@ namespace Casino::IPP
         IppStatus status = ippsSet_32fc(val,pDst,len);
         checkStatus(status);
     }    
+    template<>
+    inline void Set<Ipp64f>(const Ipp64f val, Ipp64f* pDst, int len) {
+        IppStatus status = ippsSet_64f(val,pDst,len);
+        checkStatus(status);
+    }
+
+    template<>
+    inline void Set<Ipp64fc>(const Ipp64fc val, Ipp64fc* pDst, int len) {
+        IppStatus status = ippsSet_64fc(val,pDst,len);
+        checkStatus(status);
+    }    
 
     template<>
     inline void Set<Ipp8u>(const Ipp8u val, Ipp8u* pDst, int len) {
@@ -316,7 +327,19 @@ namespace Casino::IPP
         checkStatus(status);
     }
 
-    
+    template<>
+    inline void Zero<Ipp64f>(Ipp64f* pDst, int len) {
+        IppStatus status = ippsZero_64f(pDst,len);
+        checkStatus(status);
+    }
+
+    template<>
+    inline void Zero<Ipp64fc>(Ipp64fc* pDst, int len) {
+        IppStatus status = ippsZero_64fc(pDst,len);
+        checkStatus(status);
+    }
+
+
     inline void SetNumThreads(int num) {
         IppStatus status = ippSetNumThreads(num);
         checkStatus(status);
@@ -516,6 +539,176 @@ namespace Casino::IPP
         checkStatus(status);
     }
    
+    void RealToComplex(const Ipp64f * pSrcR, const Ipp64f * pSrcD, Ipp64fc* pDst, int len) {
+        IppStatus status = ippsRealToCplx_64f(pSrcR,pSrcD,pDst,len);
+        checkStatus(status);
+    }
+    void ComplexToReal(const Ipp64fc * src, Ipp64f * real, Ipp64f * imag, int len) {
+        IppStatus status = ippsCplxToReal_64fc(src,real,imag,len);
+        checkStatus(status);
+    }
+    void Magnitude(const Ipp64f * pSrcR, const Ipp64f * pSrcD, Ipp64f* pDst, int len) {
+        IppStatus status = ippsMagnitude_64f(pSrcR,pSrcD,pDst,len);
+        checkStatus(status);
+    }
+    void Phase(const Ipp64f * pSrcR, const Ipp64f * pSrcD, Ipp64f* pDst, int len) {
+        IppStatus status = ippsPhase_64f(pSrcR,pSrcD,pDst,len);
+        checkStatus(status);
+    }
+    void CartToPolar(const Ipp64f * pSrcR, const Ipp64f * pSrcI, Ipp64f* pDstMag, Ipp64f* pDstPhase, int len) {
+        IppStatus status = ippsCartToPolar_64f(pSrcR,pSrcI,pDstMag,pDstPhase,len);
+        checkStatus(status);
+    }
+    void PolarToCart(const Ipp64f* pMag, const Ipp64f* pPhase, Ipp64f* real, Ipp64f* imag, int len) {
+        IppStatus status = ippsPolarToCart_64f(pMag,pPhase,real,imag,len);
+        checkStatus(status);
+    }
+    void Magnitude(const Ipp64fc * pSrc, Ipp64f* pDst, int len) {
+        IppStatus status = ippsMagnitude_64fc(pSrc,pDst,len);
+        checkStatus(status);
+    }
+    void Phase(const Ipp64fc * pSrc, Ipp64f* pDst, int len) {
+        IppStatus status = ippsPhase_64fc(pSrc,pDst,len);
+        checkStatus(status);
+    }
+    void CartToPolar(const Ipp64fc * src, Ipp64f* pDstMag, Ipp64f* pDstPhase, int len) {
+        IppStatus status = ippsCartToPolar_64fc(src,pDstMag,pDstPhase,len);
+        checkStatus(status);
+    }
+    void PolarToCart(const Ipp64f* pMag, const Ipp64f* pPhase, Ipp64fc * dst, int len) {
+        IppStatus status = ippsPolarToCart_64fc(pMag,pPhase,dst,len);
+        checkStatus(status);
+    }
+    void Conj(const Ipp64fc * pSrc, Ipp64fc* pDst, int len) {
+        IppStatus status = ippsConj_64fc(pSrc,pDst,len);
+        checkStatus(status);
+    }
+    void ConjFlip(const Ipp64fc * pSrc, Ipp64fc* pDst, int len) {
+        IppStatus status = ippsConjFlip_64fc(pSrc,pDst,len);
+        checkStatus(status);
+    }
+    void PowerSpectrum(const Ipp64fc * pSrc, Ipp64f* pDst, int len) {
+        IppStatus status = ippsPowerSpectr_64fc(pSrc,pDst,len);
+        checkStatus(status);
+    }
+    void Real(const Ipp64fc * pSrc, Ipp64f* pDst, int len) {
+        IppStatus status = ippsReal_64fc(pSrc,pDst,len);
+        checkStatus(status);
+    }
+    void Imag(const Ipp64fc * pSrc, Ipp64f* pDst, int len) {
+        IppStatus status = ippsImag_64fc(pSrc,pDst,len);
+        checkStatus(status);
+    }
+    void Threshold(const Ipp64f * pSrc, Ipp64f * pDst, size_t len, Ipp64f level, IppCmpOp op = ippCmpGreater) {
+        IppStatus status = ippsThreshold_64f(pSrc,pDst,level,len, op);
+        checkStatus(status);
+    }
+    void Threshold(const Ipp64fc * pSrc, Ipp64fc * pDst, size_t len, Ipp64f level, IppCmpOp op = ippCmpGreater) {
+        IppStatus status = ippsThreshold_64fc(pSrc,pDst,level,len, op);
+        checkStatus(status);
+    }
+    void WinBartlett(const Ipp64f* src, Ipp64f * dst, int len)
+    {
+        IppStatus status = ippsWinBartlett_64f(src,dst,len);
+        checkStatus(status);
+    }
+    void WinBartlett(const Ipp64fc* src, Ipp64fc * dst, int len)
+    {
+        IppStatus status = ippsWinBartlett_64fc(src,dst,len);
+        checkStatus(status);
+    }
+    void WinBartlett(Ipp64f * dst, int len)
+    {
+        IppStatus status = ippsWinBartlett_64f_I(dst,len);
+        checkStatus(status);
+    }
+    void WinBartlett(Ipp64fc * dst, int len)
+    {
+        IppStatus status = ippsWinBartlett_64fc_I(dst,len);
+        checkStatus(status);
+    }
+
+    void WinBlackman(const Ipp64f* src, Ipp64f * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinBlackman_64f(src,dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinBlackman(const Ipp64fc* src, Ipp64fc * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinBlackman_64fc(src,dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinBlackman(Ipp64f * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinBlackman_64f_I(dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinBlackman(Ipp64fc * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinBlackman_64fc_I(dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinKaiser(const Ipp64f* src, Ipp64f * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinKaiser_64f(src,dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinKaiser(const Ipp64fc* src, Ipp64fc * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinKaiser_64fc(src,dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinKaiser(Ipp64f * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinKaiser_64f_I(dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinKaiser(Ipp64fc * dst, int len, Ipp64f alpha)
+    {
+        IppStatus status = ippsWinKaiser_64fc_I(dst,len,alpha);
+        checkStatus(status);
+    }
+    void WinHamming(const Ipp64f* src, Ipp64f * dst, int len)
+    {
+        IppStatus status = ippsWinHamming_64f(src,dst,len);
+        checkStatus(status);
+    }
+    void WinHamming(const Ipp64fc* src, Ipp64fc * dst, int len)
+    {
+        IppStatus status = ippsWinHamming_64fc(src,dst,len);
+        checkStatus(status);
+    }
+    void WinHamming(Ipp64f * dst, int len)
+    {
+        IppStatus status = ippsWinHamming_64f_I(dst,len);
+        checkStatus(status);
+    }
+    void WinHamming(Ipp64fc * dst, int len)
+    {
+        IppStatus status = ippsWinHamming_64fc_I(dst,len);
+        checkStatus(status);
+    }
+
+    void WinHann(const Ipp64f* src, Ipp64f * dst, int len)
+    {
+        IppStatus status = ippsWinHann_64f(src,dst,len);
+        checkStatus(status);
+    }
+    void WinHann(const Ipp64fc* src, Ipp64fc * dst, int len)
+    {
+        IppStatus status = ippsWinHann_64fc(src,dst,len);
+        checkStatus(status);
+    }
+    void WinHann(Ipp64f * dst, int len)
+    {
+        IppStatus status = ippsWinHann_64f_I(dst,len);
+        checkStatus(status);
+    }
+    void WinHann(Ipp64fc * dst, int len)
+    {
+        IppStatus status = ippsWinHann_64fc_I(dst,len);
+        checkStatus(status);
+    }
     template<typename T>
     void Sum(const T * pSrc, int len, T* pDst, int hint = 0) {
         throw std::runtime_error("Called abstract Sum");
@@ -1672,36 +1865,50 @@ namespace Casino::IPP
         IppStatus status = ippsMinEvery_32f(src1,src2,dst,len);
         checkStatus(status);             
     }
+ 
     Ipp32f ZeroCrossing(const Ipp32f * src1, int len, IppsZCType zcType = ippZCR) {
         Ipp32f zc;
         IppStatus status = ippsZeroCrossing_32f(src1,len,&zc,zcType);
         checkStatus(status);     
         return zc;
     }
-    Ipp32f MSE(const Ipp32f * thetaAbs, const Ipp32f * thetaModel, int len) {
-        Ipp32f r = 0;
+    Ipp64f ZeroCrossing(const Ipp64f * src1, int len, IppsZCType zcType = ippZCR) {
+        Ipp64f zc;
+        IppStatus status = ippsZeroCrossing_64f(src1,len,&zc,zcType);
+        checkStatus(status);     
+        return zc;
+    }
+    
+    template<typename T>
+    T MSE(const T * thetaAbs, const T * thetaModel, int len) {
+        T r = 0;
         for(size_t i = 0; i <  len; i++)
             r += pow(thetaAbs[i] - thetaModel[i],2.0);
-        return (1.0f / (Ipp32f)len) * r;
+        return (1.0f / (T)len) * r;
     }
-    Ipp32f RMSE(const Ipp32f * thetaAbs, const Ipp32f * thetaModel, int len) {
-        Ipp32f r = MSE(thetaAbs,thetaModel,len);
+    template<typename T>
+    T RMSE(const T * thetaAbs, const T * thetaModel, int len) {
+        T r = MSE(thetaAbs,thetaModel,len);
         return sqrt(r);
     }
-    Ipp32f MeanSquare(const Ipp32f * x, int len) {
-        Ipp32f r = 0;
+    template<typename T>
+    T MeanSquare(const T * x, int len) {
+        T r = 0;
         for(size_t i = 0; i < len; i++) r += pow(x[i],2.0);
-        return (1.0f / (Ipp32f)len) * r;
+        return (1.0f / (T)len) * r;
     }
-    Ipp32f AmpToDb(Ipp32f a) {
+
+    template<typename T>
+    T AmpToDb(T a) {
         return pow(10.0,a/20.0);
     }
-    Ipp32f DbToAmp(Ipp32f a) {
+    template<typename T>
+    T DbToAmp(T a) {
         return 20.0*log10(a);
     }
     void Tone(Ipp32f * array, int len, Ipp32f mag, Ipp32f freq, Ipp32f * phase) {
-            IppStatus status = ippsTone_32f(array,len,mag,freq,phase,ippAlgHintNone);
-            checkStatus(status);
+        IppStatus status = ippsTone_32f(array,len,mag,freq,phase,ippAlgHintNone);
+        checkStatus(status);
     }
     void Triangle(Ipp32f * array, int len, Ipp32f m, Ipp32f f, Ipp32f a, Ipp32f * p) {
         IppStatus status = ippsTriangle_32f(array,len,m,f,a,p);

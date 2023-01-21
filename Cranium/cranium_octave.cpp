@@ -9,7 +9,7 @@
 #include <boost/math/differentiation/autodiff.hpp>
 
 #define PROVE(x) std::cout << x << std::endl;
-Octave::Octopus interp;
+Octopus::OctaveInterpreter interp;
 typedef float floatType;
 
 enum LayerType {
@@ -90,11 +90,8 @@ void sigmoid_grad(MatrixXf & m)
 
 
 void tanh(MatrixXf & m)
-{
-    ValueList v;
-    v(0) = m;
-    v = Octave::tanh(v);
-    m = v(0).matrix_value();
+{    
+    m = Octopus::Functions::tanh(m);    
 }
 
 
@@ -107,10 +104,7 @@ void tanh_grad(MatrixXf & m)
 
 void atan(MatrixXf & m)
 {
-    ValueList v;
-    v(0) = m;
-    v = Octave::atan(v);
-    m = v(0).matrix_value();
+    m = Octopus::atan(m);
 }
 
 void atan_grad(MatrixXf & m)
@@ -191,7 +185,7 @@ void sinwave(MatrixXf & m)
 {
     ValueList v;
     v(0) = 2*M_PI*m;
-    v = Octave::sin(v);
+    v = Octopus::sin(v);
     m = v(0).matrix_value();
 }
 
@@ -607,12 +601,12 @@ public:
     floatType CrossEntropyLoss(MatrixXf& prediction, MatrixXf& actual, floatType rs) {
         floatType total_err = 0;
         floatType reg_err = 0;
-        total_err = Octave::sum(actual * Octave::log(prediction))(0,0);
+        total_err = Octopus::sum(actual * Octopus::log(prediction))(0,0);
         if(rs > 0)
             for(size_t i = 0; i < connections.size(); i++)
             {
                 MatrixXf & weights = connections[i]->weights;
-                reg_err += Octave::sum(hadamard(weights,weights))(0,0);
+                reg_err += Octopus::sum(hadamard(weights,weights))(0,0);
             }        
         return (-1.0 / actual.rows()*total_err) + rs*0.5*reg_err;
     }
@@ -621,13 +615,13 @@ public:
         floatType reg_err = 0;
         MatrixXf tmp = actual - prediction;
         
-        total_err = Octave::sum(hadamard(tmp,tmp))(0,0);
+        total_err = Octopus::sum(hadamard(tmp,tmp))(0,0);
         
         if(rs > 0)
             for(size_t i = 0; i < connections.size(); i++)
             {
                 MatrixXf & w = connections[i]->weights;
-                reg_err += Octave::sum(hadamard(w,w))(0,0);
+                reg_err += Octopus::sum(hadamard(w,w))(0,0);
             }
             
         return ((0.5 / actual.rows()) * total_err) + (rs*0.5*reg_err);
@@ -781,8 +775,8 @@ public:
             v = interp.eval("cwisemax",v,1e-08);
             vdb_corr = v(0).matrix_value();
             
-            MatrixXf m1 = (alpha / (Octave::sqrt(vdw_corr)));
-            MatrixXf m2 = (alpha / (Octave::sqrt(vdb_corr)));
+            MatrixXf m1 = (alpha / (Octopus::sqrt(vdw_corr)));
+            MatrixXf m2 = (alpha / (Octopus::sqrt(vdb_corr)));
             
             connections[i]->weights = connections[i]->weights - hadamard(m1,mdw_corr);
             connections[i]->bias    = connections[i]->bias    - hadamard(m2,mdb_corr);    
@@ -840,8 +834,8 @@ public:
             vdb_corr = v(0).matrix_value();
             
             
-            MatrixXf m1 = (alpha / (Octave::sqrt(vdw_corr)));
-            MatrixXf m2 = (alpha / (Octave::sqrt(vdb_corr)));
+            MatrixXf m1 = (alpha / (Octopus::sqrt(vdw_corr)));
+            MatrixXf m2 = (alpha / (Octopus::sqrt(vdb_corr)));
             
             connections[i]->weights = connections[i]->weights - hadamard(m1,dWi_avg[i]);
             connections[i]->bias    = connections[i]->bias    - hadamard(m2,dbi_avg[i]);    
