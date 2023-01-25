@@ -1,4 +1,4 @@
- #pragma once
+#pragma once
 #include "Undenormal.hpp"
 #include "SoundObject.hpp"
 

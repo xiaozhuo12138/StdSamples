@@ -1,5 +1,4 @@
 #pragma once
-#define PRINT(x) std::cout << (x) << std::endl
 
 namespace Casino::IPP
 {

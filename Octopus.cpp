@@ -218,5 +218,12 @@ OctopusRowVectorXf Octavate(const Eigen::Matrix<float,1,Eigen::Dynamic,Eigen::Ro
 
 int main(int argc, char * argv[])
 {           
-    
+    ValueList values;
+    values(0) = 4;
+    values(1) = 1.0;
+    values(2) = 's';
+    values = Octave::butter(values,2);
+    MatrixXf m1 = values(0);
+    std::cout << m1 << std::endl;
+    std::cout << values(0).scalar_value() << std::endl;
 }

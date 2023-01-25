@@ -133,7 +133,7 @@ namespace Casino::IPP
     template<typename T>
     void move(IPPArray<T> & dst, const IPPArray<T> & src)
     {
-        if(a.len <= dst.len)
+        if(src.len <= dst.len)
             Move(src.array,dst.array,src.len);
         else
             Move(src.array,dst.array,dst.len);
@@ -142,7 +142,7 @@ namespace Casino::IPP
     template<typename T>
     void copy(IPPArray<T> & dst, const IPPArray<T> & src)
     {
-        if(a.len <= dst.len)
+        if(src.len <= dst.len)
             Move(src.array,dst.array,src.len);
         else
             Move(src.array,dst.array,dst.len);
@@ -156,7 +156,7 @@ namespace Casino::IPP
 
     template<typename T>
     void zero(IPPArray<T> & a) {
-        Zero(a.array,a.len);
+        Zero(a.array, a.len);
     }
 
     template<typename T>
@@ -175,9 +175,9 @@ namespace Casino::IPP
         RealToComplex(real.array,imag.array,dst.array,dst.len);
     }
     template<typename T1, typename T2>
-    void real(const IPPAray<T2> & src, IPPArray<T1> & real, IPPArray<T1> & imag)
+    void real(const IPPArray<T2> & src, IPPArray<T1> & real, IPPArray<T1> & imag)
     {
-        assert(real.len == imag.len && real.len == dst.len);
+        assert(real.len == imag.len && real.len == src.len);
         ComplexToReal(src.array,real.array,imag.array,src.len);
     }
     template<typename T>
@@ -206,7 +206,7 @@ namespace Casino::IPP
     void merge_complex(const IPPArray<T> & real, const IPPArray<T> & imag, IPPArray<T> & dst)
     {
         assert(real.len == imag.len && real.len == dst.len);
-        for(size_t i = 0; i < in.size(); i++)
+        for(size_t i = 0; i < dst.size(); i++)
         {
             dst[i].real(real[i]);
             dst[i].imag(imag[i]);
@@ -215,14 +215,14 @@ namespace Casino::IPP
     template<typename T>
     void cart2polar(const IPPArray<T> & real, const IPPArray<T> & imag, IPPArray<T> & mag, IPPArray<T> & phase)
     {
-        assert(real.len == imag.len && real.len == dst.len);
+        assert(real.len == imag.len && real.len == mag.len);
         assert(real.len == mag.len && real.len == phase.len);
         Cart2Polar(real.array,imag.array,mag.array,phase.array,real.len);
     }   
     template<typename T>
     void polar2cart(const IPPArray<T> & mag, const IPPArray<T> & phase, IPPArray<T> & real, IPPArray<T> & imag)
     {
-        assert(real.len == imag.len && real.len == dst.len);
+        assert(real.len == imag.len && real.len == mag.len);
         assert(real.len == mag.len && real.len == phase.len);
         Polar2Cart(mag.array,phase.array,real.array,imag.array,mag.len);
     }

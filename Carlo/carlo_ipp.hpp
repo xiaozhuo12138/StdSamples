@@ -1870,15 +1870,16 @@ namespace Casino::IPP
         Ipp32f zc;
         IppStatus status = ippsZeroCrossing_32f(src1,len,&zc,zcType);
         checkStatus(status);     
-        return zc;
+        return zc;        
     }
+    /*
     Ipp64f ZeroCrossing(const Ipp64f * src1, int len, IppsZCType zcType = ippZCR) {
         Ipp64f zc;
         IppStatus status = ippsZeroCrossing_64f(src1,len,&zc,zcType);
         checkStatus(status);     
         return zc;
     }
-    
+    */
     template<typename T>
     T MSE(const T * thetaAbs, const T * thetaModel, int len) {
         T r = 0;
