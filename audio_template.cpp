@@ -21,8 +21,8 @@
 #include "audio_iir_bessel.hpp"
 
 #include "Carlo/carlo_casino.hpp"
-
 #include "Filters/IIRFilters.hpp"
+
 
 #define ITERATE(index,start,end) for(size_t index = start; index < end; index += 1)
 #define STEP(index,start,end,step) for(size_t index = start; index < end; index += step)
@@ -130,7 +130,7 @@ struct IPPIIRBiquad: public Casino::IPP::IIRBiquad<DspFloatType>
             buf[x++] = c[i].a[0];
             buf[x++] = c[i].a[1];
         }
-        this->initCoefficients(blockSize,sos.size(),buf);
+        this->initCoefficients(blockSize,c.size(),buf);
     }    
     void ProcessBlock(size_t n, DspFloatType * in, DspFloatType * out)
     {
